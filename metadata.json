@@ -1,0 +1,6 @@
+{
+  "name": "AICTE SAMPARK",
+  "description": "Integrated AICTE Approval Workflow Automation, Compliance Monitoring, and Alert Management System",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

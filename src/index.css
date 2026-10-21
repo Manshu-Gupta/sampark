@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #F8FAFF;
+    color: #172033;
+  }
+}
+
+.gradient-icon-blue {
+  background: linear-gradient(135deg, #3867F5, #06B6D4);
+  color: #FFFFFF;
+}
+
+.gradient-icon-violet {
+  background: linear-gradient(135deg, #8B5CF6, #EC4899);
+  color: #FFFFFF;
+}
+
+.gradient-icon-emerald {
+  background: linear-gradient(135deg, #10B981, #06B6D4);
+  color: #FFFFFF;
+}
+
+.gradient-icon-orange {
+  background: linear-gradient(135deg, #F59E0B, #F97316);
+  color: #FFFFFF;
+}
+
+.gradient-icon-indigo {
+  background: linear-gradient(135deg, #4F46E5, #8B5CF6);
+  color: #FFFFFF;
+}
+
+.gradient-icon-rose {
+  background: linear-gradient(135deg, #EF4444, #F43F5E);
+  color: #FFFFFF;
+}
+
+.gradient-icon-teal {
+  background: linear-gradient(135deg, #0D9488, #10B981);
+  color: #FFFFFF;
+}
+
+.gradient-icon-sky {
+  background: linear-gradient(135deg, #0284C7, #3867F5);
+  color: #FFFFFF;
+}

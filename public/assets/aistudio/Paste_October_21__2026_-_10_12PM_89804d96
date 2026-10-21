@@ -1,0 +1,1035 @@
+# PROJECT: AICTE SAMPARK
+## Integrated AICTE Approval Workflow Automation, Compliance Monitoring and Alert Management System
+
+Act as a senior full-stack developer, UI/UX designer, software architect, and AI engineer.
+
+Build a functional, polished, interactive web application prototype for the following hackathon problem statement.
+
+**Organization:** All India Council for Technical Education (AICTE)
+
+**Problem Statement ID:** 26262
+
+**Problem Statement:** Integrated AICTE Approval Workflow Automation, Compliance Monitoring and Alert Management System.
+
+The application must demonstrate how an integrated digital platform can automate approval-related administrative workflows, monitor institutional compliance, manage document validity, schedule Expert Visit Committee activities, and notify responsible stakeholders about pending and overdue actions.
+
+This must be a working prototype, not merely a static dashboard, landing page, or collection of UI mockups.
+
+---
+
+# 1. CORE OBJECTIVE
+
+Build a centralized AICTE-style approval management platform connecting:
+
+1. Technical institutions.
+2. Scrutiny officers.
+3. Regional administrators.
+4. Bureau officials.
+5. Expert Visit Committee (EVC) coordinators.
+6. Senior authorities.
+
+The platform must provide role-specific dashboards, configurable approval workflows, document management, compliance tracking, deadline monitoring, notifications, reporting, and AI-assisted case analysis.
+
+All approval routes, deadlines, and committee stages must be configurable according to the applicable Approval Process Handbook (APH) and authorised administrative procedures.
+
+Do not assume that every application passes through the same stages.
+
+The platform must preserve human oversight. AI may explain, summarise, recommend, and flag potential issues, but must not independently make statutory approval decisions or replace authorised inspections and verification.
+
+Use synthetic demonstration data. Clearly identify all sample institutions, applications, officials, documents, deadlines, and approval records as fictional.
+
+---
+
+# 2. TECHNOLOGY STACK
+
+Build the application using a modern, maintainable architecture.
+
+Preferred stack:
+
+- Frontend: React with TypeScript.
+- Styling: Tailwind CSS.
+- UI components: A consistent, reusable component system.
+- Icons: Lucide React.
+- Charts: Recharts.
+- Backend: Node.js with Express, or the backend environment supported by Google AI Studio.
+- Database: MongoDB when a persistent database can be configured.
+- AI: Gemini API through a server-side integration.
+- Authentication: Secure session-based authentication or another appropriate authentication mechanism.
+- File storage: Private document storage with controlled access.
+- Notifications: In-app notification system, with optional email integration.
+- Background jobs: Scheduled processing for deadline checks and escalations.
+
+IMPORTANT IMPLEMENTATION REQUIREMENTS:
+
+1. First inspect the available Google AI Studio Build environment and use its supported architecture.
+2. Generate all necessary source files and application code.
+3. Never expose the Gemini API key in frontend code.
+4. Read secrets from environment variables or the platform's supported secret manager.
+5. If MongoDB or external services are not configured, implement a clearly labelled demonstration mode with persistent local storage where appropriate.
+6. Do not falsely claim that a real database, email service, government integration, or authentication provider is connected.
+7. Keep the code modular and easy to extend.
+8. Ensure the application builds and runs successfully.
+9. Do not stop after generating the initial homepage.
+10. Test the important user journeys and fix runtime errors before declaring the prototype complete.
+
+---
+
+# 3. VISUAL DESIGN AND USER EXPERIENCE
+
+Create a professional government-enterprise SaaS interface.
+
+The UI should look like a modern regulatory administration platform, not a generic AI chatbot.
+
+Design direction:
+
+- White and light-grey surfaces.
+- Deep navy-blue primary colour.
+- Subtle blue and teal accents.
+- Clean typography.
+- Professional data tables.
+- Compact status badges.
+- Rounded cards with subtle borders.
+- Minimal shadows.
+- Consistent spacing.
+- Clear visual hierarchy.
+- Responsive layouts for desktop, tablet, and mobile.
+
+Use a persistent sidebar and top navigation bar.
+
+Sidebar sections:
+
+1. Overview.
+2. Applications.
+3. Workflow Management.
+4. EVC Management.
+5. Institution Profiles.
+6. Compliance Monitoring.
+7. Document Registry.
+8. Alerts and Escalations.
+9. AI Compliance Assistant.
+10. Reports and Analytics.
+11. Audit Trail.
+12. Settings.
+
+Show only the sections permitted for the currently logged-in user's role.
+
+Add a global search bar, notification icon, user profile menu, current date, and breadcrumb navigation.
+
+Use realistic sample records instead of generic placeholder text.
+
+All buttons, filters, navigation elements, dialogs, tables, and forms must have meaningful interactions.
+
+---
+
+# 4. ROLE-BASED LOGIN AND ACCESS CONTROL
+
+Create a demonstration login screen with the following selectable roles:
+
+A. Institution Administrator
+B. Scrutiny Officer
+C. Regional Administrator
+D. EVC Coordinator
+E. Senior Authority
+
+For prototype convenience, provide demo accounts or a role selector with clearly labelled demonstration access.
+
+Do not present a role selector as production-grade authentication.
+
+Each role must see a different dashboard.
+
+## Institution Administrator
+
+Can:
+
+- Submit a new application.
+- View the institution's applications.
+- Track application status.
+- Respond to recorded deficiencies.
+- Access the institution's Compliance Reuse Profile.
+- Reuse eligible previously verified documents.
+- Upload renewed documents.
+- View undertaking deadlines.
+- Receive and acknowledge notifications.
+- Ask the AI Compliance Assistant questions about authorised institutional records.
+
+## Scrutiny Officer
+
+Can:
+
+- View applications assigned to them.
+- Examine submitted application information.
+- Review document metadata and extracted fields.
+- Record scrutiny observations.
+- Return an application for clarification with a mandatory reason.
+- Mark scrutiny complete when authorised.
+- View relevant application history.
+- See upcoming deadlines.
+- Flag documents for further verification.
+
+## Regional Administrator
+
+Can:
+
+- View applications within their authorised regional scope.
+- Monitor application ageing.
+- Identify pending and overdue cases.
+- View workload distribution.
+- Review escalations.
+- Reassign cases where permitted.
+- View regional reports.
+
+## EVC Coordinator
+
+Can:
+
+- View applications requiring an EVC.
+- Track visit readiness.
+- Record proposed visit dates.
+- Record scheduling status.
+- Track completion and pending reports.
+- Send reminders.
+- Escalate delayed activities according to configured rules.
+
+## Senior Authority
+
+Can:
+
+- View consolidated dashboards.
+- Examine regional performance.
+- Review bottlenecks and overdue cases.
+- View audit trails.
+- Access aggregated reports.
+- Review escalated matters.
+- View AI-generated case summaries.
+
+Actions that require statutory authority must remain restricted to the appropriately authorised role.
+
+Implement server-side permission checks wherever a backend exists. Hiding a button in the frontend is not sufficient security.
+
+---
+
+# 5. CENTRAL DASHBOARD
+
+Create a polished command-centre dashboard.
+
+Display summary cards for:
+
+- Total Applications.
+- Applications Under Scrutiny.
+- Applications Awaiting Clarification.
+- Applications Awaiting EVC.
+- Applications at Committee Stage.
+- Compliance Actions Due Soon.
+- Expiring Documents.
+- Overdue Applications.
+- Escalated Cases.
+
+Include a stage-wise application chart.
+
+Include a region-wise pendency chart.
+
+Include a processing-time trend chart.
+
+Include a workload distribution chart.
+
+Add a table called "Priority Cases" with:
+
+- Application ID.
+- Institution.
+- Application Type.
+- Current Stage.
+- Assigned Official.
+- Days in Current Stage.
+- Applicable Deadline.
+- Priority.
+- Next Required Action.
+
+Add a "Recent Activity" section.
+
+Add an "Upcoming Deadlines" section.
+
+Provide filters for:
+
+- Region.
+- Application Type.
+- Current Stage.
+- Responsible Official.
+- Date Range.
+- Pending or Overdue Status.
+
+All charts and summary cards must derive from the same underlying application records.
+
+Use realistic, internally consistent synthetic data.
+
+Make all filters functional.
+
+Clicking a summary card should navigate to the relevant filtered application list.
+
+---
+
+# 6. END-TO-END APPROVAL WORKFLOW ENGINE
+
+This is the most important functional module.
+
+Build an application lifecycle system with configurable stages and transitions.
+
+Support these illustrative processing stages:
+
+1. Draft.
+2. Submitted.
+3. Preliminary Completeness Check.
+4. Scrutiny.
+5. Clarification Required.
+6. Re-scrutiny.
+7. EVC Pending.
+8. EVC Scheduled.
+9. EVC Completed.
+10. Committee Processing.
+11. Further Verification Required.
+12. Decision Pending.
+13. Approved.
+14. Rejected.
+15. Withdrawn.
+
+These are configurable demonstration states, not a declaration that all are official AICTE stages or that every application must pass through them.
+
+The system must support multiple application routes, including:
+
+- Scrutiny only.
+- Scrutiny followed by EVC.
+- EVC followed by committee processing.
+- Scrutiny followed by EVC and committee processing.
+- Other authorised combinations.
+
+Do not force every application through every state.
+
+Create a workflow configuration screen where an authorised administrator can define:
+
+- Application category.
+- Required stages.
+- Allowed transitions.
+- Responsible role.
+- Preconditions for each transition.
+- Applicable deadlines.
+- Reminder intervals.
+- Escalation rules.
+
+Every workflow transition must be validated against the configured route.
+
+When an application reaches a stage requiring human action, assign it to the appropriate role or authorised official.
+
+Allow authorised users to:
+
+- Record an observation.
+- Return an application with a mandatory reason.
+- Request clarification.
+- Record a response.
+- Mark a stage complete.
+- Move the application to the next permitted stage.
+- Record an authorised decision.
+
+Display a visual timeline of every application.
+
+Each timeline event must include:
+
+- Timestamp.
+- Previous stage.
+- New stage.
+- Responsible user.
+- Action taken.
+- Reason or observation.
+- Relevant document references.
+
+Automatically advance applications only when the configured conditions are satisfied and any required human action has been completed.
+
+Never automatically approve or reject an application solely because an AI model recommends it.
+
+---
+
+# 7. USP: COMPLIANCE REUSE PROFILE
+
+Make this a prominent feature of the application.
+
+Each institution must have a persistent digital compliance profile.
+
+Create an institution profile containing:
+
+- Institution ID.
+- Institution Name.
+- Institution Type.
+- Region.
+- Address.
+- Available contact details.
+- Associated applications.
+- Document Registry.
+- Compliance Obligations.
+- Undertakings.
+- Verification History.
+- Upcoming Deadlines.
+- Expired Documents.
+- Compliance Status.
+
+Create a document registry with fields:
+
+- Document ID.
+- Document Type.
+- Document Name.
+- Issue Date, if applicable.
+- Expiry Date, if applicable.
+- Submission Date.
+- Verification Status.
+- Verified By.
+- Verification Date.
+- Version Number.
+- Applicability.
+- Renewal Status.
+- Secure Storage Reference.
+
+Possible document types:
+
+- Lease Agreement.
+- Building-related Documents.
+- Institutional Certificates.
+- Financial Documents.
+- Other Prescribed Documents.
+
+These are illustrative document categories. The actual mandatory documents must be configurable according to the applicable rules.
+
+## Document reuse workflow
+
+When an institution starts a new application:
+
+1. Display relevant previously submitted documents.
+2. Check whether each document is still valid.
+3. Check whether it applies to the new application.
+4. Check whether the document has the required verification status.
+5. Check whether a fresh submission or verification is required.
+6. Allow reuse only when the applicable conditions are satisfied.
+7. Record the reference to the reused document in the new application's audit history.
+8. Request an updated document when required.
+
+Do not silently reuse expired, unverified, superseded, or inapplicable documents.
+
+Provide clear badges:
+
+- Verified.
+- Pending Verification.
+- Expiring Soon.
+- Expired.
+- Renewal Submitted.
+- Reverification Required.
+
+Include a visual expiry timeline.
+
+Allow authorised officials to review and verify renewed documents.
+
+The Compliance Reuse Profile must be persistent across applications and must not simply be recreated for each new application.
+
+---
+
+# 8. UNDERTAKING AND COMPLIANCE MONITORING
+
+Create a dedicated compliance module.
+
+Each compliance obligation must contain:
+
+- Obligation ID.
+- Institution ID.
+- Related Application ID.
+- Requirement Description.
+- Source Rule or APH Reference.
+- Issue Date.
+- Due Date.
+- Submission Status.
+- Verification Status.
+- Supporting Document References.
+- Assigned Reviewer.
+- Escalation Status.
+- Closure Date.
+
+Possible statuses:
+
+- Not Yet Due.
+- Due Soon.
+- Submitted.
+- Under Verification.
+- Clarification Required.
+- Verified.
+- Overdue.
+- Closed.
+
+The workflow must support:
+
+1. Creation of a compliance obligation.
+2. Assignment to an institution.
+3. Deadline calculation from an authorised rule or entered due date.
+4. Advance reminders.
+5. Online evidence submission.
+6. Reviewer verification.
+7. Requests for clarification.
+8. Resubmission.
+9. Overdue escalation.
+10. Final closure with an audit record.
+
+Do not mark an obligation compliant merely because a document was uploaded.
+
+Compliance verification must be performed by the authorised person where required.
+
+---
+
+# 9. EVC MANAGEMENT
+
+Create a dedicated EVC dashboard.
+
+Include:
+
+- Applications requiring EVC.
+- Applications awaiting scheduling.
+- Proposed visit dates.
+- Confirmed visit dates.
+- Visits due soon.
+- Overdue visits.
+- Visit completion status.
+- Pending visit reports.
+
+Each EVC record must contain:
+
+- EVC ID.
+- Related Application ID.
+- Institution.
+- Assigned Coordinator.
+- Proposed Visit Date.
+- Confirmed Visit Date.
+- Scheduling Status.
+- Completion Status.
+- Report Submission Status.
+- Relevant Notes.
+- Audit History.
+
+Provide a calendar-style view and a table view.
+
+Allow the authorised coordinator to schedule a visit and update its status.
+
+Show reminders when a visit is approaching or overdue according to configured timelines.
+
+Do not assume that an EVC is required for every application.
+
+---
+
+# 10. ALERTS, REMINDERS, AND ESCALATIONS
+
+Implement a functioning deadline-monitoring system.
+
+Generate alerts for:
+
+- Applications approaching prescribed processing deadlines.
+- Applications overdue at their current stage.
+- EVC scheduling deadlines.
+- Upcoming compliance obligations.
+- Missing compliance submissions.
+- Documents approaching expiry.
+- Expired documents requiring renewal.
+- Pending verification.
+- Overdue escalations.
+
+Each alert must contain:
+
+- Alert ID.
+- Related Application or Obligation ID.
+- Alert Category.
+- Recipient.
+- Creation Timestamp.
+- Deadline.
+- Severity.
+- Message.
+- Read Status.
+- Acknowledgement Status.
+- Escalation Level.
+- Closure Status.
+
+Provide configurable reminder intervals, such as 30, 15, 7, and 1 day before a deadline, where suitable.
+
+These intervals are prototype defaults, not official AICTE requirements.
+
+Support overdue escalation according to configurable administrative rules.
+
+Avoid generating duplicate notifications for the same event and recipient.
+
+Provide an in-app notification centre.
+
+Display unread notification counts.
+
+Allow users to mark alerts as read and acknowledge them.
+
+For the demonstration, include a test mode that can simulate the passage of time or trigger a test reminder without changing real application deadlines.
+
+Do not claim that background reminders run continuously unless a persistent scheduler is actually configured.
+
+---
+
+# 11. GEMINI AI FEATURE 1: CONVERSATIONAL COMPLIANCE ASSISTANT
+
+Build a working AI assistant called:
+
+"AICTE Compliance Copilot"
+
+The assistant must help authorised users understand application status, recorded deficiencies, outstanding obligations, and relevant compliance rules.
+
+Example questions:
+
+- Why was this application returned?
+- What documents are still pending?
+- Why is this application delayed?
+- Summarise the application history.
+- Which compliance deadlines are approaching?
+- What did the scrutiny officer record?
+- Which action is required next?
+- Explain the relevant compliance requirement in simple language.
+
+## Implementation
+
+1. Integrate the Gemini API through a server-side service.
+2. Retrieve the relevant application record and permitted audit history.
+3. Retrieve applicable rules from a controlled, verified rule collection.
+4. Provide only the information the current user is authorised to access.
+5. Construct a grounded prompt.
+6. Generate a concise answer.
+7. Display the supporting records or rule references.
+8. Provide a link to the relevant application or compliance record.
+
+Use retrieval-augmented generation (RAG) if appropriate.
+
+If the required source records or rules cannot be found, clearly state that the available information is insufficient.
+
+Do not fabricate policy provisions, application events, or rejection reasons.
+
+Do not let user-uploaded documents override the system's trusted instructions or rule collection.
+
+The AI assistant must never independently approve, reject, or legally determine an application's status.
+
+Create a professional chat interface with suggested questions and contextual access from application detail pages.
+
+If the Gemini API is not configured, show a clear configuration message or use a clearly labelled deterministic demonstration mode. Do not pretend that an actual Gemini API response was generated.
+
+---
+
+# 12. GEMINI AI FEATURE 2: MULTIMODAL DOCUMENT ANOMALY DETECTION
+
+Create a document analysis module.
+
+Its purpose is to flag potential document inconsistencies for authorised human verification.
+
+Allow users to select or upload a synthetic sample PDF or image.
+
+Where supported, process the file securely and send the relevant document content to a vision-capable Gemini model through the backend.
+
+Analyse:
+
+- Inconsistencies between extracted values and visually displayed values.
+- Possible differences in dates, amounts, and institution details.
+- Unusual font or alignment changes.
+- Potentially inconsistent logos, seals, or signature blocks.
+- Missing or conflicting information.
+- Differences between document versions.
+
+Use OCR or a PDF text extraction library where appropriate.
+
+Compare extracted fields against the visual analysis.
+
+Return structured results:
+
+- Document Type.
+- Extracted Fields.
+- Potential Anomalies.
+- Evidence or Page References.
+- Confidence or Uncertainty.
+- Recommended Verification Steps.
+- Review Status.
+
+Provide clear categories:
+
+- No Anomaly Detected.
+- Potential Inconsistency.
+- Further Verification Required.
+- Review Completed.
+
+Do not claim that a document is authentic merely because no anomaly was detected.
+
+Do not claim that fraud has occurred merely because a visual anomaly exists.
+
+A vision model cannot reliably establish the authenticity of a bank document, logo, signature, or watermark by appearance alone.
+
+Where possible, recommend verification against an authorised issuing source.
+
+Require human review before any adverse regulatory action.
+
+Store the analysis result and reviewer outcome in the audit trail.
+
+---
+
+# 13. PROACTIVE DELAY INTELLIGENCE
+
+Create an analytics module that identifies cases at risk of missing their deadlines.
+
+For the initial prototype, use transparent rules rather than pretending that a trained prediction model exists without training data.
+
+Possible risk indicators:
+
+- Percentage of the prescribed processing time already consumed.
+- Number of days spent at the current stage.
+- Outstanding clarification requests.
+- Pending EVC scheduling.
+- Number of unresolved tasks.
+- Current assigned workload.
+- Previous stage delays, if reliable historical data exists.
+
+Display:
+
+- Low Risk.
+- Medium Risk.
+- High Risk.
+
+Explain the factors behind each risk classification.
+
+Allow administrators to configure the thresholds.
+
+If historical data is unavailable, label this feature "Rule-Based Delay Risk Assessment".
+
+Do not present a rule-based estimate as a statistically validated prediction.
+
+Include a workload analysis screen to help authorised administrators identify overloaded teams.
+
+Allow the system to recommend reassignment, but require authorised action before changing ownership.
+
+---
+
+# 14. REPORTS AND ANALYTICS
+
+Create a reports module containing:
+
+1. Application Pendency Report.
+2. Region-Wise Processing Report.
+3. Stage-Wise Processing Report.
+4. EVC Status Report.
+5. Undertaking Compliance Report.
+6. Document Expiry Report.
+7. Overdue Cases Report.
+8. Escalation Report.
+9. Official Workload Report.
+10. Application Audit History Report.
+
+Include filters for date range, region, stage, institution, and responsible official.
+
+Display charts, summary metrics, and data tables.
+
+Provide CSV export for authorised users.
+
+Ensure exported data respects the user's access permissions.
+
+Make all metrics consistent with the underlying records.
+
+Clearly distinguish sample statistics from real operational performance.
+
+---
+
+# 15. AUDIT TRAIL AND ACCOUNTABILITY
+
+Build a dedicated audit trail module.
+
+Record significant events such as:
+
+- Application creation.
+- Application submission.
+- Assignment and reassignment.
+- Stage transitions.
+- Scrutiny observations.
+- Returns for clarification.
+- Institutional responses.
+- Document uploads and replacements.
+- Document verification.
+- Compliance submissions.
+- EVC scheduling and completion.
+- Notifications and escalations.
+- AI analysis requests and outputs.
+- Authorised decisions.
+
+Each audit event should include:
+
+- Event ID.
+- Timestamp.
+- User ID.
+- User Role.
+- Action.
+- Entity Type.
+- Entity ID.
+- Previous Value, where relevant.
+- New Value, where relevant.
+- Reason or Notes.
+- Correlation ID, where useful.
+
+Provide search and filtering.
+
+Normal users must not be able to edit or delete historical audit events.
+
+Where a correction is necessary, create a new recorded event rather than silently rewriting the history.
+
+For production use, implement appropriate server-side audit controls.
+
+---
+
+# 16. DATABASE DESIGN
+
+Create a coherent data model with the following entities or collections:
+
+1. Users.
+2. Institutions.
+3. Applications.
+4. WorkflowDefinitions.
+5. WorkflowTransitions.
+6. ApplicationEvents.
+7. Documents.
+8. ComplianceObligations.
+9. EVCRecords.
+10. Notifications.
+11. Escalations.
+12. AuditEvents.
+13. RuleReferences.
+14. DocumentAnalysisResults.
+
+Use stable identifiers and appropriate relationships.
+
+Ensure that:
+
+- Each application belongs to an institution.
+- Each application has a current workflow state.
+- Documents can be linked to multiple eligible applications through references.
+- Compliance obligations have explicit due dates and statuses.
+- EVC records link to the relevant application.
+- Notifications link to the relevant recipient and event.
+- Audit events identify the affected entity.
+- Role-based access is enforced.
+- Document versions and verification history are preserved.
+
+Use appropriate validation and indexing.
+
+Prevent invalid workflow transitions.
+
+Avoid duplicated institution profiles.
+
+Use server-side validation for important operations.
+
+---
+
+# 17. DEMONSTRATION DATA
+
+Seed the prototype with at least:
+
+- 8 fictional institutions.
+- 20 fictional applications.
+- 5 demonstration officials.
+- 12 document records.
+- 10 compliance obligations.
+- 6 EVC records.
+- 12 notifications.
+- 20 audit events.
+
+Use realistic but clearly fictional Indian institution names and sample data.
+
+Include applications in different states:
+
+- Newly submitted.
+- Under scrutiny.
+- Returned for clarification.
+- Awaiting re-scrutiny.
+- Awaiting EVC scheduling.
+- EVC scheduled.
+- Awaiting committee processing.
+- Pending compliance.
+- Approaching a deadline.
+- Overdue.
+- Completed.
+
+Include a mixture of document states:
+
+- Verified.
+- Pending verification.
+- Expiring soon.
+- Expired.
+- Renewal submitted.
+
+Use consistent identifiers and dates.
+
+Make it possible to reset the demonstration data.
+
+Never include actual confidential student, institutional, or government records.
+
+---
+
+# 18. APPLICATION DETAIL PAGE
+
+Every application should have a comprehensive detail page.
+
+Include tabs:
+
+- Overview.
+- Workflow Timeline.
+- Documents.
+- Scrutiny Observations.
+- Compliance.
+- EVC.
+- Notifications.
+- AI Case Summary.
+- Audit History.
+
+The overview must show:
+
+- Application ID.
+- Institution.
+- Application Type.
+- Current Stage.
+- Submission Date.
+- Applicable Deadline.
+- Assigned Official.
+- Pending Actions.
+- Delay Risk.
+- Required Next Step.
+
+Show action buttons according to the current user's permissions and the application's permitted transitions.
+
+Add confirmation dialogs for important actions.
+
+Require a reason when returning an application or recording a material administrative action where appropriate.
+
+After an action, update the interface, related records, notifications, and audit trail consistently.
+
+---
+
+# 19. FUNCTIONAL QUALITY REQUIREMENTS
+
+The prototype must work end to end.
+
+Implement:
+
+- Navigation between every major module.
+- Working role-based dashboards.
+- Search and filtering.
+- Application submission.
+- Application detail views.
+- Validated workflow transitions.
+- Return-for-clarification functionality.
+- Institutional responses.
+- Document registry.
+- Compliance submissions.
+- EVC scheduling.
+- Deadline calculations.
+- Reminder simulation.
+- Escalation tracking.
+- Audit event creation.
+- AI assistant integration.
+- Document analysis integration.
+- Reports and CSV export.
+
+Use a single consistent data model.
+
+Avoid disconnected demo buttons that do nothing.
+
+Avoid fake success messages when an operation fails.
+
+Show loading, success, empty, and error states.
+
+Provide clear feedback after user actions.
+
+Ensure the layout is responsive.
+
+Use reusable components and maintainable code.
+
+---
+
+# 20. DEMONSTRATION SCENARIO
+
+Prepare a complete, repeatable demonstration.
+
+Use the following fictional scenario:
+
+Institution: Sunrise Institute of Technology.
+
+Application ID: AICTE-DEMO-2026-001.
+
+Application Type: A fictional application category configured for scrutiny followed by EVC.
+
+Demonstrate this sequence:
+
+1. The institution logs in.
+2. It opens its Compliance Reuse Profile.
+3. It selects a previously verified lease document that remains valid and applicable.
+4. It submits an application.
+5. The application appears in the scrutiny officer's dashboard.
+6. The officer records a deficiency and returns the application with a reason.
+7. The institution receives a notification.
+8. The institution submits a clarification.
+9. The application becomes eligible for re-scrutiny.
+10. After the required authorised action, it enters the EVC queue.
+11. The EVC coordinator schedules the visit.
+12. The system displays an upcoming deadline.
+13. The institution's dashboard shows an approaching compliance deadline.
+14. The AI Compliance Copilot explains the application's recorded history.
+15. The officer reviews a synthetic document analysis result.
+16. The dashboard updates the application status.
+17. The audit trail records every important action.
+
+Ensure the scenario follows the configured workflow and does not skip required human actions.
+
+Provide a demo reset option.
+
+---
+
+# 21. BUILD AND TEST INSTRUCTIONS
+
+Before finishing:
+
+1. Inspect the project structure.
+2. Implement the application rather than merely describing it.
+3. Ensure all required modules exist.
+4. Check imports, routes, components, and dependencies.
+5. Run the supported build or validation process.
+6. Fix compilation and runtime errors.
+7. Test the primary demonstration scenario.
+8. Test each role's permissions.
+9. Test invalid workflow transitions.
+10. Test upcoming and overdue deadline conditions.
+11. Test document reuse conditions.
+12. Test notification and audit-event creation.
+13. Test API failure handling.
+14. Confirm that secrets are not exposed in client-side code.
+15. Confirm that the application does not claim real government integration.
+16. Provide a concise README with setup instructions and environment variables.
+
+If an external service cannot be configured automatically, implement the remaining application functionality and document the exact setup needed.
+
+Do not replace the required functionality with static screenshots or a design-only prototype.
+
+---
+
+# FINAL DELIVERABLE
+
+Deliver a working web application prototype named "AICTE SAMPARK".
+
+The finished prototype should demonstrate:
+
+- Automated approval workflow management.
+- Role-based dashboards.
+- Application pendency monitoring.
+- EVC scheduling.
+- Compliance Reuse Profile.
+- Document validity tracking.
+- Undertaking and compliance monitoring.
+- Notifications and escalations.
+- Gemini-powered compliance assistance.
+- Multimodal document anomaly analysis.
+- Delay risk assessment.
+- Reports and analytics.
+- A complete audit trail.
+
+Prioritise correctness, usability, a coherent data model, working user journeys, and clear regulatory safeguards.
+
+Start by generating the complete application and its supporting files. Continue through implementation, testing, and correction of errors until the prototype is ready for a hackathon demonstration.
