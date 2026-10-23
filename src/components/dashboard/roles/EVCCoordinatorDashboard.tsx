@@ -50,17 +50,17 @@ export const EVCCoordinatorDashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header Banner - White & Violet/Pink Gradient Identity */}
+      {/* Header Banner - White & Soft Lavender/Violet Accent */}
       <div className="relative overflow-hidden rounded-2xl bg-white border border-[#E5EAF3] text-[#172033] p-6 md:p-8 shadow-xs">
-        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-violet-600 via-pink-500 to-violet-600" />
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-violet-500/80 via-purple-400/80 to-violet-500/80" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-50 border border-violet-200/80 text-violet-700 text-xs font-bold mb-3 shadow-2xs">
-              <div className="w-5 h-5 rounded-md bg-gradient-to-r from-violet-600 to-pink-500 flex items-center justify-center text-white">
-                <CalendarCheck className="w-3 h-3 text-white" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-50 border border-violet-200/80 text-violet-700 text-xs font-semibold mb-3">
+              <div className="w-5 h-5 rounded-md bg-violet-100 text-violet-700 flex items-center justify-center">
+                <CalendarCheck className="w-3.5 h-3.5" />
               </div>
               <span>Expert Visit Committee Directorate</span>
-              <span className="text-pink-700 font-mono font-bold">• EVC Operations</span>
+              <span className="text-violet-700 font-mono font-bold">• EVC Operations</span>
             </div>
             <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-[#172033]">
               EVC Inspection & Peer Review Command
@@ -73,7 +73,7 @@ export const EVCCoordinatorDashboard: React.FC = () => {
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={() => setActiveTab('evc')}
-              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 text-white font-bold text-xs transition-all flex items-center gap-2 shadow-sm shadow-violet-500/20"
+              className="px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-semibold text-xs transition-all flex items-center gap-2 shadow-xs cursor-pointer"
             >
               <Users className="w-4 h-4" />
               <span>Full EVC Management Console</span>
@@ -102,13 +102,13 @@ export const EVCCoordinatorDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* KPI Cards - White with Violet/Pink Gradient Icons */}
+      {/* KPI Cards - Soft Pastel Icons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white rounded-2xl p-5 border border-[#E5EAF3] shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Pending Scheduling</span>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600 to-purple-600 text-white flex items-center justify-center shadow-xs">
-              <Clock className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center border border-violet-200/60 shadow-2xs">
+              <Clock className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
@@ -121,13 +121,13 @@ export const EVCCoordinatorDashboard: React.FC = () => {
         <div className="bg-white rounded-2xl p-5 border border-[#E5EAF3] shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Scheduled Visits</span>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-pink-500 text-white flex items-center justify-center shadow-xs">
-              <CalendarCheck className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-200/60 shadow-2xs">
+              <CalendarCheck className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
             <span className="text-2xl font-extrabold text-[#172033]">{scheduledVisits.length}</span>
-            <span className="text-xs text-pink-600 ml-2 font-bold">Panels mobilized</span>
+            <span className="text-xs text-purple-700 ml-2 font-bold">Panels mobilized</span>
           </div>
           <p className="mt-2 text-xs text-slate-500 font-medium">Campus inspection visits</p>
         </div>
@@ -135,8 +135,8 @@ export const EVCCoordinatorDashboard: React.FC = () => {
         <div className="bg-white rounded-2xl p-5 border border-[#E5EAF3] shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Geo-tagged Evidence</span>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 text-white flex items-center justify-center shadow-xs">
-              <Camera className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-200/60 shadow-2xs">
+              <Camera className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
@@ -149,8 +149,8 @@ export const EVCCoordinatorDashboard: React.FC = () => {
         <div className="bg-white rounded-2xl p-5 border border-[#E5EAF3] shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Completed Reports</span>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white flex items-center justify-center shadow-xs">
-              <CheckCircle2 className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-200/60 shadow-2xs">
+              <CheckCircle2 className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
@@ -309,7 +309,7 @@ export const EVCCoordinatorDashboard: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-violet-50 via-purple-50/50 to-pink-50/40 border border-violet-200/80 rounded-2xl p-5 shadow-xs">
+          <div className="bg-violet-50/40 border border-violet-200/70 rounded-2xl p-5 shadow-xs">
             <div className="flex items-center gap-2 mb-2 text-violet-700 font-bold text-xs">
               <Video className="w-4 h-4 text-violet-600" />
               Geo-Tagged Digital Evidence Rules
@@ -318,7 +318,7 @@ export const EVCCoordinatorDashboard: React.FC = () => {
             <p className="text-xs text-slate-600 mb-3 leading-relaxed font-medium">
               Every EVC inspection report must be accompanied by live geotagged photographs with embedded coordinates and timestamp watermarking.
             </p>
-            <div className="text-[11px] text-violet-900 font-mono bg-white p-3 rounded-xl border border-violet-200 space-y-1">
+            <div className="text-[11px] text-violet-900 font-mono bg-white p-3 rounded-xl border border-violet-200/80 space-y-1">
               ✓ Latitude/Longitude EXIF Match<br />
               ✓ Digital Signatures of 3 Members<br />
               ✓ Timestamp Verified with AICTE Clock
@@ -329,11 +329,11 @@ export const EVCCoordinatorDashboard: React.FC = () => {
 
       {/* Submit Report Modal */}
       {selectedEvcForReport && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/30 backdrop-blur-xs animate-in fade-in">
           <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-[#E5EAF3] space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600 to-pink-500 flex items-center justify-center text-white shadow-xs">
-                <FileCheck2 className="w-5 h-5 text-white" />
+              <div className="w-10 h-10 rounded-xl bg-violet-100 text-violet-700 flex items-center justify-center">
+                <FileCheck2 className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="text-base font-extrabold text-[#172033]">Record EVC Findings & Inspection Report</h3>
@@ -381,7 +381,7 @@ export const EVCCoordinatorDashboard: React.FC = () => {
               <button
                 onClick={handleCompleteReport}
                 disabled={!reportSummary.trim()}
-                className="px-4 py-2 rounded-xl bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 disabled:opacity-50 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm"
+                className="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 disabled:opacity-50 text-white font-bold text-xs flex items-center gap-1.5 shadow-xs cursor-pointer"
               >
                 <Send className="w-3.5 h-3.5" />
                 <span>Submit Signed Inspection Report</span>

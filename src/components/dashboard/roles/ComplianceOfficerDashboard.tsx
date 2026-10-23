@@ -54,14 +54,14 @@ export const ComplianceOfficerDashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header Banner - White & Emerald/Cyan Gradient Identity */}
+      {/* Header Banner - White & Soft Mint/Emerald Accent */}
       <div className="relative overflow-hidden rounded-2xl bg-white border border-[#E5EAF3] text-[#172033] p-6 md:p-8 shadow-xs">
-        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-500" />
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500/80 via-teal-400/80 to-cyan-500/80" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-800 text-xs font-bold mb-3 shadow-2xs">
-              <div className="w-5 h-5 rounded-md bg-gradient-to-r from-emerald-600 to-cyan-500 flex items-center justify-center text-white">
-                <ClipboardCheck className="w-3 h-3 text-white" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-800 text-xs font-semibold mb-3">
+              <div className="w-5 h-5 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                <ClipboardCheck className="w-3.5 h-3.5" />
               </div>
               <span>National Compliance Monitoring Bureau</span>
               <span className="text-teal-700 font-mono font-bold">• Enforcement Wing</span>
@@ -77,7 +77,7 @@ export const ComplianceOfficerDashboard: React.FC = () => {
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={() => setActiveTab('compliance')}
-              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-xs transition-all flex items-center gap-2 shadow-sm shadow-emerald-500/20"
+              className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition-all flex items-center gap-2 shadow-xs cursor-pointer"
             >
               <ClipboardCheck className="w-4 h-4" />
               <span>Comprehensive Obligation Registry</span>
@@ -106,13 +106,13 @@ export const ComplianceOfficerDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* KPI Metric Cards - White with Emerald/Cyan Gradient Icons */}
+      {/* KPI Metric Cards - Soft Pastel Icons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white rounded-2xl p-5 border border-[#E5EAF3] shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Evidences In Review</span>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white flex items-center justify-center shadow-xs">
-              <ClipboardCheck className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center border border-teal-200/60 shadow-2xs">
+              <ClipboardCheck className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
@@ -125,8 +125,8 @@ export const ComplianceOfficerDashboard: React.FC = () => {
         <div className="bg-white rounded-2xl p-5 border border-[#E5EAF3] shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Approaching Deadlines</span>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white flex items-center justify-center shadow-xs">
-              <Clock className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200/60 shadow-2xs">
+              <Clock className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
@@ -139,8 +139,8 @@ export const ComplianceOfficerDashboard: React.FC = () => {
         <div className="bg-white rounded-2xl p-5 border border-[#E5EAF3] shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Overdue Defaults</span>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500 to-pink-500 text-white flex items-center justify-center shadow-xs">
-              <AlertTriangle className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center border border-rose-200/60 shadow-2xs">
+              <AlertTriangle className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
@@ -153,8 +153,8 @@ export const ComplianceOfficerDashboard: React.FC = () => {
         <div className="bg-white rounded-2xl p-5 border border-[#E5EAF3] shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Verified & Clear</span>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-500 text-white flex items-center justify-center shadow-xs">
-              <CheckCircle2 className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-200/60 shadow-2xs">
+              <CheckCircle2 className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
@@ -257,7 +257,7 @@ export const ComplianceOfficerDashboard: React.FC = () => {
                       {ob.status === 'SUBMITTED' ? (
                         <button
                           onClick={() => setSelectedObligationForReview(ob.id)}
-                          className="px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-xs rounded-xl transition-all flex items-center gap-1.5 shadow-sm shadow-emerald-500/20"
+                          className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl transition-all flex items-center gap-1.5 shadow-xs cursor-pointer"
                         >
                           <CheckCircle2 className="w-3.5 h-3.5" />
                           <span>Verify Evidence</span>
@@ -283,8 +283,8 @@ export const ComplianceOfficerDashboard: React.FC = () => {
         <div className="space-y-6">
           <div className="bg-white rounded-2xl border border-[#E5EAF3] shadow-xs p-5">
             <h2 className="text-sm font-extrabold text-[#172033] flex items-center gap-2 mb-3">
-              <div className="w-6 h-6 rounded-md bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white">
-                <FolderArchive className="w-3.5 h-3.5 text-white" />
+              <div className="w-6 h-6 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                <FolderArchive className="w-3.5 h-3.5" />
               </div>
               Document Expiry & Validity Radar
             </h2>
@@ -332,11 +332,11 @@ export const ComplianceOfficerDashboard: React.FC = () => {
 
       {/* Verify Modal */}
       {selectedObligationForReview && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/30 backdrop-blur-xs animate-in fade-in">
           <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-[#E5EAF3] space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white shadow-xs">
-                <ClipboardCheck className="w-5 h-5 text-white" />
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                <ClipboardCheck className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="text-base font-extrabold text-[#172033]">Verify Undertaking Evidence</h3>
@@ -375,7 +375,7 @@ export const ComplianceOfficerDashboard: React.FC = () => {
               </button>
               <button
                 onClick={() => handleVerify('VERIFIED')}
-                className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm"
+                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-xs cursor-pointer"
               >
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 <span>Mark Compliant & Close</span>

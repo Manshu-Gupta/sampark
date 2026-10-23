@@ -51,17 +51,17 @@ export const RegionalDashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header Banner - White & Teal/Emerald Gradient Identity */}
+      {/* Header Banner - White & Soft Teal/Mint Accent */}
       <div className="relative overflow-hidden rounded-2xl bg-white border border-[#E5EAF3] text-[#172033] p-6 md:p-8 shadow-xs">
-        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-teal-600 via-emerald-500 to-teal-600" />
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500/80 via-emerald-400/80 to-teal-500/80" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200/80 text-teal-800 text-xs font-bold mb-3 shadow-2xs">
-              <div className="w-5 h-5 rounded-md bg-gradient-to-r from-teal-600 to-emerald-500 flex items-center justify-center text-white">
-                <MapPin className="w-3 h-3 text-white" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 border border-teal-200/80 text-teal-800 text-xs font-semibold mb-3">
+              <div className="w-5 h-5 rounded-md bg-teal-100 text-teal-700 flex items-center justify-center">
+                <MapPin className="w-3.5 h-3.5" />
               </div>
               <span>Regional Directorate Oversight</span>
-              <span className="text-emerald-700 font-mono font-bold">• {selectedRegion.replace(/_/g, ' ')}</span>
+              <span className="text-teal-700 font-mono font-bold">• {selectedRegion.replace(/_/g, ' ')}</span>
             </div>
             <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-[#172033]">
               Regional Pendency & Regulatory Command
@@ -142,8 +142,8 @@ export const RegionalDashboard: React.FC = () => {
               <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
                 0 – 7 Days
               </span>
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white shadow-2xs">
-                <CheckCircle2 className="w-4 h-4 text-white" />
+              <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-200/60">
+                <CheckCircle2 className="w-4 h-4" />
               </div>
             </div>
             <div className="mt-3">
@@ -166,8 +166,8 @@ export const RegionalDashboard: React.FC = () => {
               <span className="text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200">
                 8 – 15 Days
               </span>
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white shadow-2xs">
-                <Clock className="w-4 h-4 text-white" />
+              <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-200/60">
+                <Clock className="w-4 h-4" />
               </div>
             </div>
             <div className="mt-3">
@@ -190,8 +190,8 @@ export const RegionalDashboard: React.FC = () => {
               <span className="text-xs font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
                 16 – 30 Days
               </span>
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white shadow-2xs">
-                <AlertTriangle className="w-4 h-4 text-white" />
+              <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-200/60">
+                <AlertTriangle className="w-4 h-4" />
               </div>
             </div>
             <div className="mt-3">
@@ -214,8 +214,8 @@ export const RegionalDashboard: React.FC = () => {
               <span className="text-xs font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">
                 &gt; 30 Days
               </span>
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-rose-500 to-pink-500 flex items-center justify-center text-white shadow-2xs">
-                <Flame className="w-4 h-4 text-white" />
+              <div className="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center border border-rose-200/60">
+                <Flame className="w-4 h-4" />
               </div>
             </div>
             <div className="mt-3">
@@ -305,8 +305,8 @@ export const RegionalDashboard: React.FC = () => {
         <div className="space-y-6">
           <div className="bg-white rounded-2xl border border-[#E5EAF3] shadow-xs p-5">
             <h2 className="text-sm font-extrabold text-[#172033] flex items-center gap-2 mb-3">
-              <div className="w-6 h-6 rounded-md bg-gradient-to-br from-rose-500 to-pink-500 flex items-center justify-center text-white">
-                <ShieldAlert className="w-3.5 h-3.5 text-white" />
+              <div className="w-6 h-6 rounded-md bg-rose-100 text-rose-700 flex items-center justify-center">
+                <ShieldAlert className="w-3.5 h-3.5" />
               </div>
               Level 2 Regional Escalations
             </h2>
@@ -348,8 +348,8 @@ export const RegionalDashboard: React.FC = () => {
 
           <div className="bg-white rounded-2xl border border-[#E5EAF3] shadow-xs p-5">
             <h2 className="text-sm font-extrabold text-[#172033] flex items-center gap-2 mb-3">
-              <div className="w-6 h-6 rounded-md bg-gradient-to-br from-teal-500 to-emerald-500 flex items-center justify-center text-white">
-                <Building2 className="w-3.5 h-3.5 text-white" />
+              <div className="w-6 h-6 rounded-md bg-teal-100 text-teal-700 flex items-center justify-center">
+                <Building2 className="w-3.5 h-3.5" />
               </div>
               Institutions Under Watch
             </h2>

@@ -21,6 +21,15 @@ import {
   Sparkles,
   FileSearch,
   ExternalLink,
+  GraduationCap,
+  Cpu,
+  Layers,
+  Receipt,
+  CreditCard,
+  FileCheck2,
+  BookOpen,
+  Landmark,
+  FileEdit,
 } from 'lucide-react';
 
 export const ApplicationDetail: React.FC = () => {
@@ -38,10 +47,12 @@ export const ApplicationDetail: React.FC = () => {
     setActiveTab,
     auditEvents,
     notifications,
+    openNewApplicationModal,
   } = useApp();
 
   const [activeSubTab, setActiveSubTab] = useState<
     | 'overview'
+    | 'college_form'
     | 'timeline'
     | 'documents'
     | 'observations'
@@ -291,10 +302,15 @@ export const ApplicationDetail: React.FC = () => {
         </div>
       </div>
 
-      {/* 9 Tab Navigation */}
+      {/* Tab Navigation */}
       <div className="flex border-b border-slate-200 overflow-x-auto text-xs font-medium space-x-6">
         {[
           { id: 'overview', label: 'Overview' },
+          {
+            id: 'college_form',
+            label: 'AICTE Application Form',
+            count: application.formData ? (application.formData.courses?.length || 1) : undefined,
+          },
           { id: 'timeline', label: 'Workflow Timeline', count: application.timelineEvents.length },
           { id: 'documents', label: 'Documents & Reuse', count: attachedDocs.length },
           {
@@ -497,6 +513,463 @@ export const ApplicationDetail: React.FC = () => {
                   </p>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tab: College Approval Application Form */}
+      {activeSubTab === 'college_form' && (
+        <div className="space-y-6">
+          {/* Form Header Banner */}
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <span className="font-mono text-xs font-bold bg-blue-50 text-blue-700 px-2.5 py-0.5 rounded-md border border-blue-200">
+                  Application ID: {application.id}
+                </span>
+                {application.permanentId && (
+                  <span className="font-mono text-xs font-bold bg-purple-50 text-purple-700 px-2.5 py-0.5 rounded-md border border-purple-200">
+                    Permanent ID (PID): {application.permanentId}
+                  </span>
+                )}
+                <span
+                  className={`text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full ${
+                    application.currentStage === 'SUBMITTED'
+                      ? 'bg-cyan-50 text-cyan-800 border border-cyan-200'
+                      : application.currentStage === 'DRAFT'
+                      ? 'bg-slate-100 text-slate-700 border border-slate-300'
+                      : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                  }`}
+                >
+                  {application.currentStage === 'SUBMITTED' ? 'Submitted – Pending Scrutiny' : application.currentStage.replace(/_/g, ' ')}
+                </span>
+                {application.paymentStatus === 'PAID' && (
+                  <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                    Fee Paid: ₹{application.feeAmount?.toLocaleString('en-IN') || 'Paid'}
+                  </span>
+                )}
+              </div>
+              <h3 className="text-lg font-extrabold text-slate-900">
+                Official AICTE Approval Dossier & Application Form
+              </h3>
+              <p className="text-xs text-slate-500 mt-1">
+                Academic Year {application.academicYear} • Regulatory Route: {application.route.replace(/_/g, ' ')} • Approval Category: {application.type.replace(/_/g, ' ')}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              {currentUser.role === 'INSTITUTION_ADMIN' && application.currentStage === 'DRAFT' && (
+                <button
+                  onClick={() => openNewApplicationModal(application.id)}
+                  className="px-4 py-2.5 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-extrabold text-xs rounded-xl shadow-sm transition-all flex items-center gap-2 cursor-pointer"
+                >
+                  <FileEdit className="w-4 h-4" />
+                  <span>Resume & Edit Form</span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Section 1: Institution Details */}
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                  <Building2 className="w-4 h-4" />
+                </div>
+                1. Institutional Registration &amp; Contact Details
+              </h4>
+              <span className="text-xs text-slate-400 font-medium">Part A — Institution Master Data</span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+              <div className="p-3 bg-slate-50/80 rounded-xl border border-slate-100">
+                <span className="text-slate-400 block text-[11px] font-medium">Institution Name</span>
+                <span className="font-bold text-slate-800 text-sm mt-0.5 block">
+                  {application.formData?.institutionName || application.institutionName}
+                </span>
+              </div>
+              <div className="p-3 bg-slate-50/80 rounded-xl border border-slate-100">
+                <span className="text-slate-400 block text-[11px] font-medium">Permanent AICTE ID</span>
+                <span className="font-mono font-bold text-purple-700 text-sm mt-0.5 block">
+                  {application.formData?.permanentId || application.permanentId || application.institutionId}
+                </span>
+              </div>
+              <div className="p-3 bg-slate-50/80 rounded-xl border border-slate-100">
+                <span className="text-slate-400 block text-[11px] font-medium">Institution Type</span>
+                <span className="font-bold text-slate-800 mt-0.5 block">
+                  {application.formData?.institutionType || 'GOVERNMENT_AIDED'}
+                </span>
+              </div>
+              <div className="p-3 bg-slate-50/80 rounded-xl border border-slate-100">
+                <span className="text-slate-400 block text-[11px] font-medium">Affiliated University / Board</span>
+                <span className="font-semibold text-slate-800 mt-0.5 block">
+                  {application.formData?.courses?.[0]?.affiliatingUniversity || 'State Technical University'}
+                </span>
+              </div>
+              <div className="p-3 bg-slate-50/80 rounded-xl border border-slate-100">
+                <span className="text-slate-400 block text-[11px] font-medium">Campus Location</span>
+                <span className="font-semibold text-slate-800 mt-0.5 block">
+                  {application.formData?.city || 'City'}, {application.formData?.state || application.region} — {application.formData?.pincode || '400001'}
+                </span>
+              </div>
+              <div className="p-3 bg-slate-50/80 rounded-xl border border-slate-100">
+                <span className="text-slate-400 block text-[11px] font-medium">Total Land Area</span>
+                <span className="font-bold text-emerald-700 mt-0.5 block">
+                  {application.formData?.landAreaAcres || 15.5} Acres (Contiguous Campus)
+                </span>
+              </div>
+              <div className="p-3 bg-slate-50/80 rounded-xl border border-slate-100">
+                <span className="text-slate-400 block text-[11px] font-medium">Principal / Director</span>
+                <span className="font-semibold text-slate-800 mt-0.5 block">
+                  {application.formData?.headOfInstitutionName || 'Dr. Authorized Head'}
+                </span>
+                <span className="text-[11px] text-slate-500 font-mono">
+                  {application.formData?.headEmail || 'principal@institution.edu.in'}
+                </span>
+              </div>
+              <div className="p-3 bg-slate-50/80 rounded-xl border border-slate-100">
+                <span className="text-slate-400 block text-[11px] font-medium">Society / Trust Registration</span>
+                <span className="font-mono text-slate-700 text-[11px] block mt-0.5">
+                  {application.formData?.societyTrustName || 'Registered Educational Society'} ({application.formData?.societyRegNo || 'REG-7819/2004'})
+                </span>
+              </div>
+              <div className="p-3 bg-slate-50/80 rounded-xl border border-slate-100">
+                <span className="text-slate-400 block text-[11px] font-medium">Authorized Signatory</span>
+                <span className="font-semibold text-slate-800 mt-0.5 block">
+                  {application.formData?.signatoryName || 'Registrar / Secretary'} ({application.formData?.signatoryDesignation || 'Registrar'})
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 2: Course & Intake Table */}
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2">
+              <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <div className="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                  <GraduationCap className="w-4 h-4" />
+                </div>
+                2. Technical Programmes, Courses &amp; Sanctioned vs. Proposed Intake
+              </h4>
+              <span className="text-xs font-mono font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-lg border border-indigo-200">
+                Total Proposed Seats: {application.formData?.courses?.reduce((acc, c) => acc + (Number(c.proposedIntake) || 0), 0) || 480} Seats
+              </span>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold uppercase text-[10px] tracking-wider">
+                  <tr>
+                    <th className="px-4 py-3">Course / Specialization</th>
+                    <th className="px-4 py-3">Level</th>
+                    <th className="px-4 py-3 text-center">Current Intake</th>
+                    <th className="px-4 py-3 text-center">Proposed Intake</th>
+                    <th className="px-4 py-3 text-center">Intake Delta</th>
+                    <th className="px-4 py-3 text-center">NBA Status</th>
+                    <th className="px-4 py-3">Affiliating Body</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {(application.formData?.courses || [
+                    { id: 'c1', courseName: 'Computer Science & Engineering', level: 'UG' as const, currentIntake: 120, proposedIntake: 180, accreditationStatus: 'NBA_ACCREDITED' as const, affiliatingUniversity: 'State Technical University', program: 'ENGINEERING_AND_TECHNOLOGY' },
+                    { id: 'c2', courseName: 'Electronics & Communication', level: 'UG' as const, currentIntake: 120, proposedIntake: 120, accreditationStatus: 'NBA_ACCREDITED' as const, affiliatingUniversity: 'State Technical University', program: 'ENGINEERING_AND_TECHNOLOGY' },
+                    { id: 'c3', courseName: 'Mechanical Engineering', level: 'UG' as const, currentIntake: 60, proposedIntake: 60, accreditationStatus: 'NOT_ACCREDITED' as const, affiliatingUniversity: 'State Technical University', program: 'ENGINEERING_AND_TECHNOLOGY' },
+                    { id: 'c4', courseName: 'Artificial Intelligence & Data Science', level: 'UG' as const, currentIntake: 60, proposedIntake: 120, accreditationStatus: 'APPLIED' as const, affiliatingUniversity: 'State Technical University', program: 'ENGINEERING_AND_TECHNOLOGY' },
+                  ]).map((course, idx) => {
+                    const delta = (Number(course.proposedIntake) || 0) - (Number(course.currentIntake) || 0);
+                    return (
+                      <tr key={course.id || idx} className="hover:bg-slate-50/70 transition-colors">
+                        <td className="px-4 py-3 font-semibold text-slate-900">{course.courseName}</td>
+                        <td className="px-4 py-3 text-slate-600">{course.level}</td>
+                        <td className="px-4 py-3 text-center font-bold text-slate-700">{course.currentIntake}</td>
+                        <td className="px-4 py-3 text-center font-bold text-blue-700">{course.proposedIntake}</td>
+                        <td className="px-4 py-3 text-center">
+                          {delta > 0 ? (
+                            <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                              +{delta} Seats
+                            </span>
+                          ) : delta < 0 ? (
+                            <span className="text-rose-700 font-bold bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">
+                              {delta} Seats
+                            </span>
+                          ) : (
+                            <span className="text-slate-400 font-medium">Unchanged</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-3 text-center">
+                          {course.accreditationStatus === 'NBA_ACCREDITED' ? (
+                            <span className="text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                              NBA Accredited
+                            </span>
+                          ) : (
+                            <span className="text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">{course.accreditationStatus.replace(/_/g, ' ')}</span>
+                          )}
+                        </td>
+                        <td className="px-4 py-3 text-slate-500 font-medium">{course.affiliatingUniversity || 'Technical University'}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Section 3 & 4: Faculty Cadre Norms & Physical Infrastructure */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Faculty & SFR Card */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+              <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2 pb-3 border-b border-slate-100">
+                <div className="w-7 h-7 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center">
+                  <UserCheck className="w-4 h-4" />
+                </div>
+                3. Faculty Cadre Ratio &amp; Student-to-Faculty Ratio (SFR)
+              </h4>
+
+              <div className="grid grid-cols-2 gap-3 text-xs">
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                  <span className="text-slate-400 block text-[11px]">Total Regular Faculty</span>
+                  <span className="text-xl font-extrabold text-slate-900 mt-1 block">
+                    {application.formData?.facultyCount || 84}
+                  </span>
+                  <span className="text-[10px] text-emerald-600 font-bold">100% AICTE qualified</span>
+                </div>
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                  <span className="text-slate-400 block text-[11px]">Calculated SFR</span>
+                  <span className="text-xl font-extrabold text-blue-700 mt-1 block">
+                    1:{application.formData?.studentFacultyRatio || '15'}
+                  </span>
+                  <span className="text-[10px] text-blue-600 font-semibold">AICTE Benchmark: 1:15 / 1:20</span>
+                </div>
+              </div>
+
+              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-100 text-xs space-y-2">
+                <div className="flex justify-between items-center text-slate-600">
+                  <span>Cadre Ratio 1:2:6 Compliance:</span>
+                  <span className="font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 text-[10px]">
+                    {application.formData?.cadreRatioCompliant !== false ? 'Verified Compliant' : 'Review Required'}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center text-slate-600">
+                  <span>Principal / Director Qualified:</span>
+                  <span className="font-bold text-emerald-700">
+                    {application.formData?.principalQualified !== false ? 'Yes (Ph.D. + 15yr Exp)' : 'No'}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center text-slate-600">
+                  <span>Classrooms &amp; Tutorial Rooms:</span>
+                  <span className="font-bold text-slate-900">
+                    {application.formData?.classroomsCount || 24} Classrooms • {application.formData?.tutorialRoomsCount || 8} Tutorial Rooms
+                  </span>
+                </div>
+                <div className="pt-2 border-t border-slate-200 flex justify-between items-center font-bold">
+                  <span>Statutory Faculty Cadre:</span>
+                  <span className="text-emerald-700 text-[10px]">
+                    Compliant with APH 2026-27 Norms
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Infrastructure & Computing Facilities */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+              <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2 pb-3 border-b border-slate-100">
+                <div className="w-7 h-7 rounded-lg bg-cyan-50 text-cyan-600 flex items-center justify-center">
+                  <Cpu className="w-4 h-4" />
+                </div>
+                4. Physical Infrastructure &amp; Computing Facilities
+              </h4>
+
+              <div className="grid grid-cols-2 gap-3 text-xs">
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                  <span className="text-slate-400 block text-[11px]">Built-up Carpet Area</span>
+                  <span className="text-base font-extrabold text-slate-900 mt-1 block">
+                    {application.formData?.builtUpAreaSqM?.toLocaleString('en-IN') || '14,250'} sq.m
+                  </span>
+                </div>
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                  <span className="text-slate-400 block text-[11px]">Specialized Laboratories</span>
+                  <span className="text-base font-extrabold text-indigo-700 mt-1 block">
+                    {application.formData?.laboratoriesCount || 36} Labs
+                  </span>
+                </div>
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                  <span className="text-slate-400 block text-[11px]">Student PC Terminals</span>
+                  <span className="text-base font-extrabold text-blue-700 mt-1 block">
+                    {application.formData?.computersCount || 650} Terminals
+                  </span>
+                </div>
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                  <span className="text-slate-400 block text-[11px]">Leased Line Bandwidth</span>
+                  <span className="text-base font-extrabold text-teal-700 mt-1 block">
+                    {application.formData?.bandwidthMbps || 1000} Mbps
+                  </span>
+                </div>
+              </div>
+
+              <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <BookOpen className="w-4 h-4 text-slate-500" />
+                  <span className="text-slate-600 font-medium">Library Collection:</span>
+                </div>
+                <span className="font-bold text-slate-800">
+                  {application.formData?.libraryBooksCount?.toLocaleString('en-IN') || '12,500'} Books • {application.formData?.libraryJournalSubscriptions || 45} Journals
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 5 & 6: Statutory Compliance & Payment Receipt */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Statutory Compliance Clearances */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+              <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2 pb-3 border-b border-slate-100">
+                <div className="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                5. Statutory NOCs &amp; Mandatory Regulatory Committees
+              </h4>
+
+              <div className="space-y-2.5 text-xs">
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <div>
+                      <span className="font-bold text-slate-800 block">Fire &amp; Life Safety NOC</span>
+                      <span className="text-[11px] text-slate-500">
+                        Status: {application.formData?.fireSafetyNOCValid !== false ? 'Certified & Valid' : 'Renewal Pending'}
+                      </span>
+                    </div>
+                  </div>
+                  <span className="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded border border-emerald-200">
+                    Valid
+                  </span>
+                </div>
+
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <div>
+                      <span className="font-bold text-slate-800 block">Anti-Ragging Committee (ARC)</span>
+                      <span className="text-[11px] text-slate-500">Constituted under AICTE Regulation 2009</span>
+                    </div>
+                  </div>
+                  <span className="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded border border-emerald-200">
+                    {application.formData?.antiRaggingCommitteeConstituted !== false ? 'Active' : 'Pending'}
+                  </span>
+                </div>
+
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <div>
+                      <span className="font-bold text-slate-800 block">Internal Complaints Committee (ICC)</span>
+                      <span className="text-[11px] text-slate-500">Women cell under POSH Act 2013</span>
+                    </div>
+                  </div>
+                  <span className="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded border border-emerald-200">
+                    {application.formData?.internalComplaintsCommitteeConstituted !== false ? 'Formed' : 'Pending'}
+                  </span>
+                </div>
+
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <div>
+                      <span className="font-bold text-slate-800 block">Divyangjan Barrier-Free Campus</span>
+                      <span className="text-[11px] text-slate-500">Lifts, accessible ramps, Braille signage, disabled-friendly toilets</span>
+                    </div>
+                  </div>
+                  <span className="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded border border-emerald-200">
+                    {application.formData?.barrierFreeCampus !== false ? '100% Equipped' : 'Incomplete'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Official Fee & Payment Receipt */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+              <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2 pb-3 border-b border-slate-100">
+                <div className="w-7 h-7 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
+                  <Receipt className="w-4 h-4" />
+                </div>
+                6. Applicable Fee Assessment &amp; Payment Receipt
+              </h4>
+
+              <div className="p-4 bg-gradient-to-br from-slate-50 to-purple-50/30 rounded-xl border border-purple-100 space-y-3 text-xs">
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-500 font-medium">Regulatory Tariff Clause:</span>
+                  <span className="font-mono font-bold text-purple-800">
+                    {application.formData?.feeBreakdown?.applicationCategory || 'AICTE APH 2026-27 Chapter II'}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-500">Base Processing Fee:</span>
+                  <span className="font-bold text-slate-800">
+                    ₹{(application.formData?.feeBreakdown?.baseRegulatoryFee || 200000).toLocaleString('en-IN')}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-slate-500">Goods &amp; Services Tax (18% GST):</span>
+                  <span className="font-bold text-slate-800">
+                    ₹{(application.formData?.feeBreakdown?.gstAmount || 36000).toLocaleString('en-IN')}
+                  </span>
+                </div>
+                <div className="pt-2 border-t border-purple-200 flex justify-between items-center text-sm font-extrabold text-slate-900">
+                  <span>Total Amount Assessed:</span>
+                  <span className="text-purple-700">
+                    ₹{(application.formData?.feeBreakdown?.totalPayable || application.feeAmount || 236000).toLocaleString('en-IN')}
+                  </span>
+                </div>
+              </div>
+
+              <div className="p-3.5 bg-emerald-50/70 border border-emerald-200 rounded-xl text-xs space-y-1.5">
+                <div className="flex items-center justify-between font-bold text-emerald-800">
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    Payment Confirmed
+                  </span>
+                  <span className="font-mono text-[11px]">
+                    Ref: {application.formData?.paymentDetails?.transactionId || application.paymentReference || 'TXN-AICTE-982184'}
+                  </span>
+                </div>
+                <div className="text-[11px] text-emerald-700 flex justify-between">
+                  <span>Payment Channel: {application.formData?.paymentDetails?.paymentMode || 'Net Banking (SBI / HDFC)'}</span>
+                  <span>Date: {application.formData?.paymentDetails?.paymentDate || application.submissionDate}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 7: Statutory Undertaking */}
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+            <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <div className="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center">
+                <FileCheck2 className="w-4 h-4" />
+              </div>
+              7. Authorized Undertaking &amp; Legal Declaration
+            </h4>
+            <p className="text-xs text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-200 font-mono">
+              "We hereby solemnly confirm and declare that the information furnished in this AICTE Approval Application for Academic Year {application.academicYear} is true, complete, and verifiable. The institution satisfies all land, infrastructure, faculty cadre ratios, and equipment requirements as stipulated in the AICTE Approval Process Handbook (APH 2026-27). Any wilful concealment or misrepresentation shall render the institution liable for de-approval and penal action under the AICTE Act 1987."
+            </p>
+            <div className="flex flex-wrap items-center justify-between gap-4 text-xs pt-2">
+              <div>
+                <span className="text-slate-400 block text-[11px]">Authorized Signatory</span>
+                <span className="font-bold text-slate-800 text-sm">
+                  {application.formData?.signatoryName || 'Authorized Secretary / Principal'}
+                </span>
+                <span className="text-slate-400 text-xs block">
+                  {application.formData?.signatoryDesignation || 'Principal'}
+                </span>
+              </div>
+              <div className="text-right">
+                <span className="text-slate-400 block text-[11px]">Digital Verification Timestamp</span>
+                <span className="font-mono font-bold text-slate-700">
+                  {application.formData?.paymentDetails?.paymentDate || application.formData?.signatureDate || application.submissionDate} (Authenticity Verified)
+                </span>
+              </div>
             </div>
           </div>
         </div>

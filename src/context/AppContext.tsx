@@ -13,6 +13,8 @@ import {
   ApplicationType,
   ApplicationRoute,
   WorkflowDefinition,
+  CollegeApprovalFormData,
+  CollegeApprovalPayment,
 } from '../types';
 import {
   DEMO_USERS,
@@ -78,6 +80,32 @@ interface AppContextType {
   setIsSignInModalOpen: (open: boolean) => void;
   loginAsRole: (role: UserRole) => void;
   logout: () => void;
+
+  // Collapsible Sidebar State
+  isSidebarOpen: boolean;
+  setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleSidebar: () => void;
+  closeSidebar: () => void;
+
+  // New College Approval Form & Cross-Dashboard Workflow
+  isNewAppModalOpen: boolean;
+  setIsNewAppModalOpen: (open: boolean) => void;
+  editingDraftAppId: string | null;
+  setEditingDraftAppId: (id: string | null) => void;
+  openNewApplicationModal: (draftId?: string) => void;
+  closeNewApplicationModal: () => void;
+  saveApplicationDraft: (formData: CollegeApprovalFormData, existingId?: string) => Application;
+  submitCollegeApprovalApplication: (
+    formData: CollegeApprovalFormData,
+    payment: CollegeApprovalPayment,
+    existingDraftId?: string
+  ) => Application;
+  forwardApplicationWithRemarks: (
+    applicationId: string,
+    newStage: ApprovalStage,
+    remarks: string,
+    notes?: string
+  ) => boolean;
 
   // Core Workflow Operations
   submitNewApplication: (data: {
@@ -216,6 +244,24 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [selectedApplicationId, setSelectedApplicationId] = useState<string | null>(null);
   const [currentView, setCurrentView] = useState<'LANDING' | 'AUTH_PORTAL'>('LANDING');
   const [isSignInModalOpen, setIsSignInModalOpen] = useState<boolean>(false);
+  const [isNewAppModalOpen, setIsNewAppModalOpen] = useState<boolean>(false);
+  const [editingDraftAppId, setEditingDraftAppId] = useState<string | null>(null);
+
+  // Collapsible Sidebar (Hidden by default as per requirement)
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
+  const closeSidebar = () => setIsSidebarOpen(false);
+
+  const openNewApplicationModal = (draftId?: string) => {
+    setEditingDraftAppId(draftId || null);
+    setIsNewAppModalOpen(true);
+  };
+
+  const closeNewApplicationModal = () => {
+    setIsNewAppModalOpen(false);
+    setEditingDraftAppId(null);
+  };
+
   const [applicationFilter, setApplicationFilter] = useState<{
     stage?: string;
     region?: string;
@@ -447,7 +493,229 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     return newApp;
   };
 
-  // Advance stage
+  // Save Application Draft
+  const saveApplicationDraft = (formData: CollegeApprovalFormData, existingId?: string): Application => {
+    const inst = institutions.find((i) => i.id === currentUser.institutionId) || institutions[0];
+    const targetId = existingId || `DRAFT-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    let appType: ApplicationType = 'INTAKE_VARIATION';
+    let route: ApplicationRoute = 'SCRUTINY_EVC';
+    const cat = formData.feeBreakdown?.applicationCategory || '';
+    if (cat.includes('Extension of Approval')) {
+      appType = 'EXTENSION_OF_APPROVAL';
+      route = 'SCRUTINY_ONLY';
+    } else if (cat.includes('New Program')) {
+      appType = 'NEW_PROGRAM';
+      route = 'SCRUTINY_EVC';
+    } else if (cat.includes('New Institution')) {
+      appType = 'NEW_INSTITUTION';
+      route = 'SCRUTINY_EVC_COMMITTEE';
+    } else if (cat.includes('Change of Site')) {
+      appType = 'CHANGE_OF_SITE';
+      route = 'SCRUTINY_EVC_COMMITTEE';
+    }
+
+    const draftApp: Application = {
+      id: targetId,
+      institutionId: inst.id,
+      institutionName: inst.name,
+      permanentId: formData.permanentId || inst.code,
+      type: appType,
+      academicYear: '2026-2027',
+      route,
+      currentStage: 'DRAFT',
+      submissionDate: currentSimulatedDate.toISOString().substring(0, 10),
+      stageDeadline: new Date(currentSimulatedDate.getTime() + 30 * 86400000).toISOString().substring(0, 10),
+      daysInCurrentStage: 0,
+      stageSlaDays: 30,
+      assignedOfficerId: 'USR-SCRUT-002',
+      assignedOfficerName: 'P. V. Ramanathan',
+      region: inst.region,
+      priority: 'NORMAL',
+      delayRisk: 'LOW_RISK',
+      delayRiskFactors: [],
+      attachedDocumentIds: [],
+      reusedDocumentIds: [],
+      scrutinyObservations: [],
+      clarificationHistory: [],
+      timelineEvents: [
+        {
+          id: `TLE-${Date.now()}`,
+          timestamp: currentSimulatedDate.toISOString().replace('T', ' ').substring(0, 16),
+          previousStage: 'DRAFT',
+          newStage: 'DRAFT',
+          responsibleUserId: currentUser.id,
+          responsibleUserName: currentUser.name,
+          responsibleRole: currentUser.role,
+          actionTaken: 'Draft Application Saved',
+          reasonOrObservation: 'Draft saved by Institution Administrator. Can be resumed and edited anytime.',
+        },
+      ],
+      paymentStatus: formData.paymentDetails?.paymentStatus === 'PAID' ? 'PAID' : 'PENDING',
+      paymentReference: formData.paymentDetails?.transactionId,
+      feeAmount: formData.feeBreakdown?.totalPayable,
+      formData: {
+        ...formData,
+        isDraft: true,
+        lastSavedAt: currentSimulatedDate.toISOString().replace('T', ' ').substring(0, 16),
+      },
+    };
+
+    setApplications((prev) => {
+      const exists = prev.some((a) => a.id === targetId);
+      if (exists) {
+        return prev.map((a) => (a.id === targetId ? draftApp : a));
+      }
+      return [draftApp, ...prev];
+    });
+
+    logAuditEvent(
+      'DRAFT_SAVED',
+      'APPLICATION',
+      targetId,
+      'NONE',
+      'DRAFT',
+      `Draft approval application saved for ${inst.name}.`
+    );
+
+    return draftApp;
+  };
+
+  // Submit College Approval Application
+  const submitCollegeApprovalApplication = (
+    formData: CollegeApprovalFormData,
+    payment: CollegeApprovalPayment,
+    existingDraftId?: string
+  ): Application => {
+    const inst = institutions.find((i) => i.id === currentUser.institutionId) || institutions[0];
+    const officialId =
+      existingDraftId && !existingDraftId.startsWith('DRAFT-')
+        ? existingDraftId
+        : `AICTE-APP-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    let appType: ApplicationType = 'INTAKE_VARIATION';
+    let route: ApplicationRoute = 'SCRUTINY_EVC';
+    const cat = formData.feeBreakdown?.applicationCategory || '';
+    if (cat.includes('Extension of Approval')) {
+      appType = 'EXTENSION_OF_APPROVAL';
+      route = 'SCRUTINY_ONLY';
+    } else if (cat.includes('New Program')) {
+      appType = 'NEW_PROGRAM';
+      route = 'SCRUTINY_EVC';
+    } else if (cat.includes('New Institution')) {
+      appType = 'NEW_INSTITUTION';
+      route = 'SCRUTINY_EVC_COMMITTEE';
+    } else if (cat.includes('Change of Site')) {
+      appType = 'CHANGE_OF_SITE';
+      route = 'SCRUTINY_EVC_COMMITTEE';
+    }
+
+    const instDocs = documents.filter((d) => d.institutionId === inst.id);
+    const reusedDocIds = instDocs.filter((d) => d.verificationStatus === 'VERIFIED').map((d) => d.id);
+    const attachedDocIds = instDocs.map((d) => d.id);
+
+    const submittedApp: Application = {
+      id: officialId,
+      institutionId: inst.id,
+      institutionName: inst.name,
+      permanentId: formData.permanentId || inst.code,
+      type: appType,
+      academicYear: '2026-2027',
+      route,
+      currentStage: 'SUBMITTED', // UI displays as "Submitted – Pending Scrutiny"
+      submissionDate: currentSimulatedDate.toISOString().substring(0, 10),
+      stageDeadline: new Date(currentSimulatedDate.getTime() + 14 * 86400000).toISOString().substring(0, 10),
+      daysInCurrentStage: 0,
+      stageSlaDays: 14,
+      assignedOfficerId: 'USR-SCRUT-002',
+      assignedOfficerName: 'P. V. Ramanathan',
+      region: inst.region,
+      priority: 'NORMAL',
+      delayRisk: 'LOW_RISK',
+      delayRiskFactors: [],
+      attachedDocumentIds: attachedDocIds,
+      reusedDocumentIds: reusedDocIds,
+      scrutinyObservations: [],
+      clarificationHistory: [],
+      timelineEvents: [
+        {
+          id: `TLE-${Date.now()}`,
+          timestamp: currentSimulatedDate.toISOString().replace('T', ' ').substring(0, 16),
+          previousStage: 'DRAFT',
+          newStage: 'SUBMITTED',
+          responsibleUserId: currentUser.id,
+          responsibleUserName: currentUser.name,
+          responsibleRole: currentUser.role,
+          actionTaken: 'Application Submitted Online with Fee Receipt',
+          reasonOrObservation: `Formal AICTE approval submission for ${appType.replace(/_/g, ' ')}. Fee paid: ₹${payment.amountPaid.toLocaleString('en-IN')} (Ref: ${payment.transactionId}).`,
+          relevantDocumentRefs: reusedDocIds,
+        },
+      ],
+      paymentStatus: 'PAID',
+      paymentReference: payment.transactionId,
+      feeAmount: payment.amountPaid,
+      formData: {
+        ...formData,
+        isDraft: false,
+        paymentDetails: payment,
+        lastSavedAt: currentSimulatedDate.toISOString().replace('T', ' ').substring(0, 16),
+      },
+    };
+
+    setApplications((prev) => {
+      const filtered = existingDraftId ? prev.filter((a) => a.id !== existingDraftId) : prev;
+      return [submittedApp, ...filtered];
+    });
+
+    logAuditEvent(
+      'APPLICATION_SUBMITTED',
+      'APPLICATION',
+      officialId,
+      'DRAFT',
+      'SUBMITTED',
+      `Official approval application submitted by ${inst.name} (${officialId}) with Payment Ref: ${payment.transactionId}.`
+    );
+
+    // Notify Scrutiny Officers
+    const scrutinyNotif: NotificationRecord = {
+      id: `NOTIF-${Date.now()}-SCRUT`,
+      recipientRole: 'SCRUTINY_OFFICER',
+      relatedEntityId: officialId,
+      relatedEntityType: 'APPLICATION',
+      category: 'SLA_DEADLINE',
+      severity: 'INFO',
+      title: `New College Application Submitted: ${inst.name}`,
+      message: `Application ${officialId} submitted for ${appType.replace(/_/g, ' ')}. Status: Submitted – Pending Scrutiny. Fee verified paid (₹${payment.amountPaid.toLocaleString('en-IN')}).`,
+      createdAt: currentSimulatedDate.toISOString().replace('T', ' ').substring(0, 16),
+      deadline: submittedApp.stageDeadline,
+      isRead: false,
+      isAcknowledged: false,
+      escalationLevel: 0,
+    };
+
+    // Notify Institution Admin with submission confirmation
+    const instNotif: NotificationRecord = {
+      id: `NOTIF-${Date.now()}-INST`,
+      recipientRole: 'INSTITUTION_ADMIN',
+      recipientId: currentUser.id,
+      relatedEntityId: officialId,
+      relatedEntityType: 'APPLICATION',
+      category: 'SLA_DEADLINE',
+      severity: 'INFO',
+      title: `AICTE Application Submitted Successfully: ${officialId}`,
+      message: `Your approval application has been successfully submitted and forwarded for Scrutiny. Payment Reference: ${payment.transactionId}.`,
+      createdAt: currentSimulatedDate.toISOString().replace('T', ' ').substring(0, 16),
+      isRead: false,
+      isAcknowledged: false,
+      escalationLevel: 0,
+    };
+
+    setNotifications((prev) => [scrutinyNotif, instNotif, ...prev]);
+
+    return submittedApp;
+  };
+
+  // Advance stage & forward with cross-role synchronization
   const advanceApplicationStage = (
     applicationId: string,
     newStage: ApprovalStage,
@@ -489,7 +757,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       `${reason}. ${notes || ''}`
     );
 
-    // If moved to EVC_PENDING, ensure EVC record exists
+    // If moved to EVC_PENDING, ensure EVC record exists and notify Coordinator + College
     if (newStage === 'EVC_PENDING') {
       const existingEVC = evcRecords.find((e) => e.applicationId === applicationId);
       if (!existingEVC) {
@@ -508,7 +776,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
           schedulingStatus: 'AWAITING_PROPOSAL',
           completionStatus: 'PENDING',
           reportSubmissionStatus: 'NOT_SUBMITTED',
-          notes: 'Auto-enqueued into EVC Scheduling Roster following successful Scrutiny sign-off.',
+          notes: notes || 'Auto-enqueued into EVC Scheduling Roster following successful Scrutiny sign-off.',
           deadlineDate: new Date(currentSimulatedDate.getTime() + 10 * 86400000).toISOString().substring(0, 10),
           timeline: [
             {
@@ -519,29 +787,108 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
           ],
         };
         setEvcRecords((prev) => [newEVC, ...prev]);
-
-        // Notify EVC Coordinator
-        setNotifications((prev) => [
-          {
-            id: `NOTIF-${Date.now()}-EVC`,
-            recipientRole: 'EVC_COORDINATOR',
-            relatedEntityId: applicationId,
-            relatedEntityType: 'EVC',
-            category: 'EVC_REMINDER',
-            severity: 'INFO',
-            title: `EVC Visit Required: ${app.institutionName}`,
-            message: `Application ${applicationId} passed Scrutiny. Please propose visit dates to expert panel.`,
-            createdAt: currentSimulatedDate.toISOString().replace('T', ' ').substring(0, 16),
-            isRead: false,
-            isAcknowledged: false,
-            escalationLevel: 0,
-          },
-          ...prev,
-        ]);
       }
+
+      // Notify EVC Coordinator & College
+      setNotifications((prev) => [
+        {
+          id: `NOTIF-${Date.now()}-EVC`,
+          recipientRole: 'EVC_COORDINATOR',
+          relatedEntityId: applicationId,
+          relatedEntityType: 'EVC',
+          category: 'EVC_REMINDER',
+          severity: 'INFO',
+          title: `EVC Visit Planning Required: ${app.institutionName}`,
+          message: `Application ${applicationId} forwarded from Scrutiny. Please propose visit dates and assign expert committee. Forwarded by: ${currentUser.name} (${currentUser.role}).`,
+          createdAt: currentSimulatedDate.toISOString().replace('T', ' ').substring(0, 16),
+          isRead: false,
+          isAcknowledged: false,
+          escalationLevel: 0,
+        },
+        {
+          id: `NOTIF-${Date.now()}-INST-EVC`,
+          recipientRole: 'INSTITUTION_ADMIN',
+          relatedEntityId: applicationId,
+          relatedEntityType: 'APPLICATION',
+          category: 'SLA_DEADLINE',
+          severity: 'INFO',
+          title: `Application Forwarded to EVC Inspection: ${applicationId}`,
+          message: `Your application has been verified by Scrutiny and forwarded for Expert Visit Committee (EVC) peer review inspection.`,
+          createdAt: currentSimulatedDate.toISOString().replace('T', ' ').substring(0, 16),
+          isRead: false,
+          isAcknowledged: false,
+          escalationLevel: 0,
+        },
+        ...prev,
+      ]);
+    }
+
+    // If moved to COMMITTEE_PROCESSING or DECISION_PENDING, notify Bureau / Competent Authority + College
+    if (newStage === 'COMMITTEE_PROCESSING' || newStage === 'DECISION_PENDING') {
+      setNotifications((prev) => [
+        {
+          id: `NOTIF-${Date.now()}-BUREAU`,
+          recipientRole: 'BUREAU_OFFICER',
+          relatedEntityId: applicationId,
+          relatedEntityType: 'APPLICATION',
+          category: 'SLA_DEADLINE',
+          severity: 'INFO',
+          title: `Application Awaiting Competent Authority Decision: ${app.institutionName}`,
+          message: `Application ${applicationId} is ready for official Council review and sanction decision. Forwarded by: ${currentUser.name} (${currentUser.role}).`,
+          createdAt: currentSimulatedDate.toISOString().replace('T', ' ').substring(0, 16),
+          isRead: false,
+          isAcknowledged: false,
+          escalationLevel: 0,
+        },
+        {
+          id: `NOTIF-${Date.now()}-INST-COMMITTEE`,
+          recipientRole: 'INSTITUTION_ADMIN',
+          relatedEntityId: applicationId,
+          relatedEntityType: 'APPLICATION',
+          category: 'SLA_DEADLINE',
+          severity: 'INFO',
+          title: `Application Under Council Review: ${applicationId}`,
+          message: `Your application has progressed to Council / Committee evaluation for statutory determination.`,
+          createdAt: currentSimulatedDate.toISOString().replace('T', ' ').substring(0, 16),
+          isRead: false,
+          isAcknowledged: false,
+          escalationLevel: 0,
+        },
+        ...prev,
+      ]);
+    }
+
+    // If moved to FURTHER_VERIFICATION, notify Compliance Verification Officer + College
+    if (newStage === 'FURTHER_VERIFICATION') {
+      setNotifications((prev) => [
+        {
+          id: `NOTIF-${Date.now()}-COMPL`,
+          recipientRole: 'COMPLIANCE_OFFICER',
+          relatedEntityId: applicationId,
+          relatedEntityType: 'APPLICATION',
+          category: 'SLA_DEADLINE',
+          severity: 'INFO',
+          title: `Compliance Verification Required: ${app.institutionName}`,
+          message: `Application ${applicationId} assigned for post-inspection compliance and document verification. Forwarded by: ${currentUser.name}.`,
+          createdAt: currentSimulatedDate.toISOString().replace('T', ' ').substring(0, 16),
+          isRead: false,
+          isAcknowledged: false,
+          escalationLevel: 0,
+        },
+        ...prev,
+      ]);
     }
 
     return true;
+  };
+
+  const forwardApplicationWithRemarks = (
+    applicationId: string,
+    newStage: ApprovalStage,
+    remarks: string,
+    notes?: string
+  ): boolean => {
+    return advanceApplicationStage(applicationId, newStage, remarks, notes);
   };
 
   // Record Scrutiny Deficiency
@@ -1149,8 +1496,21 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         setApplicationFilter,
         currentView,
         setCurrentView,
+        isSidebarOpen,
+        setIsSidebarOpen,
+        toggleSidebar,
+        closeSidebar,
         isSignInModalOpen,
         setIsSignInModalOpen,
+        isNewAppModalOpen,
+        setIsNewAppModalOpen,
+        editingDraftAppId,
+        setEditingDraftAppId,
+        openNewApplicationModal,
+        closeNewApplicationModal,
+        saveApplicationDraft,
+        submitCollegeApprovalApplication,
+        forwardApplicationWithRemarks,
         loginAsRole,
         logout,
         submitNewApplication,

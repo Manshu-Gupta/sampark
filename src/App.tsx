@@ -19,6 +19,7 @@ import { DemoScenarioGuide } from './components/demo/DemoScenarioGuide';
 import { SettingsView } from './components/settings/SettingsView';
 import { LandingPage } from './components/landing/LandingPage';
 import { RoleSelectionModal } from './components/auth/RoleSelectionModal';
+import { CollegeApprovalFormModal } from './components/applications/CollegeApprovalFormModal';
 
 const MainLayout: React.FC = () => {
   const { activeTab } = useApp();
@@ -61,13 +62,13 @@ const MainLayout: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen w-screen bg-[#F8FAFF] font-sans text-[#172033] antialiased overflow-hidden">
-      {/* Persistent Sidebar */}
+    <div className="flex h-screen w-screen bg-[#F8FAFF] font-sans text-[#172033] antialiased overflow-hidden relative">
+      {/* Collapsible Sidebar Drawer (Hidden by default, slides out on menu click) */}
       <Sidebar />
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
-        {/* Top Navbar */}
+      {/* Main Content Area - Full Available Viewport */}
+      <div className="flex-1 w-full flex flex-col min-w-0 h-screen overflow-hidden">
+        {/* Top Navbar with Hamburger Icon */}
         <Navbar />
 
         {/* Scrollable Viewport */}
@@ -86,6 +87,7 @@ const AppContent: React.FC = () => {
     <>
       {currentView === 'LANDING' ? <LandingPage /> : <MainLayout />}
       <RoleSelectionModal />
+      <CollegeApprovalFormModal />
     </>
   );
 };

@@ -43,22 +43,22 @@ export const SuperAdminDashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header Banner - White Card with Cobalt & Cyan Gradient Accent */}
+      {/* Header Banner - White Card with Soft Cobalt & Sky Accent */}
       <div className="relative overflow-hidden rounded-2xl bg-white text-[#172033] p-6 md:p-8 shadow-xs border border-[#E5EAF3]">
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500" />
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500/80 via-indigo-500/70 to-cyan-500/80" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-[#3867F5] text-xs font-semibold mb-3">
-              <div className="w-5 h-5 rounded-md gradient-icon-blue flex items-center justify-center">
-                <ShieldCheck className="w-3.5 h-3.5 text-white" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-blue-700 text-xs font-semibold mb-3">
+              <div className="w-5 h-5 rounded-md bg-blue-100 text-blue-700 flex items-center justify-center">
+                <ShieldCheck className="w-3.5 h-3.5" />
               </div>
               <span>National System Administrator Console</span>
-              <span className="text-blue-700 font-mono text-[11px] bg-blue-100/60 px-1.5 py-0.5 rounded">ROOT PRIVILEGES</span>
+              <span className="text-blue-700 font-mono text-[11px] bg-blue-100/60 px-1.5 py-0.5 rounded font-bold">ROOT PRIVILEGES</span>
             </div>
             <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-[#172033]">
               Platform Architecture & SLA Policy Engine
             </h1>
-            <p className="text-sm text-[#64748B] mt-1 max-w-2xl">
+            <p className="text-sm text-[#64748B] mt-1 max-w-2xl font-medium">
               Configure regulatory route SLA thresholds, manage 8-tier role matrix permissions, monitor cluster health, and orchestrate simulation environments.
             </p>
           </div>
@@ -74,7 +74,7 @@ export const SuperAdminDashboard: React.FC = () => {
             </button>
             <button
               onClick={() => setActiveTab('settings')}
-              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs transition-all flex items-center gap-2 shadow-sm cursor-pointer"
+              className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition-all flex items-center gap-2 shadow-xs cursor-pointer"
             >
               <Settings className="w-4 h-4" />
               <span>All Settings & Profiles</span>
@@ -93,7 +93,7 @@ export const SuperAdminDashboard: React.FC = () => {
           </div>
           <div className="p-3 rounded-xl bg-[#F8FAFF] border border-[#E5EAF3]">
             <span className="text-[#64748B] block text-[11px] font-medium">Configured System Roles</span>
-            <span className="font-bold text-[#3867F5] text-sm block mt-0.5">{users.length} Verified Personas</span>
+            <span className="font-bold text-blue-600 text-sm block mt-0.5">{users.length} Verified Personas</span>
           </div>
           <div className="p-3 rounded-xl bg-[#F8FAFF] border border-[#E5EAF3]">
             <span className="text-[#64748B] block text-[11px] font-medium">Active Workflow Routes</span>
@@ -101,67 +101,67 @@ export const SuperAdminDashboard: React.FC = () => {
           </div>
           <div className="p-3 rounded-xl bg-[#F8FAFF] border border-[#E5EAF3]">
             <span className="text-[#64748B] block text-[11px] font-medium">Document Vault Storage</span>
-            <span className="font-bold text-[#06B6D4] text-sm block mt-0.5">{documents.length} Cryptographic Proofs</span>
+            <span className="font-bold text-cyan-600 text-sm block mt-0.5">{documents.length} Cryptographic Proofs</span>
           </div>
         </div>
       </div>
 
-      {/* KPI Cards */}
+      {/* KPI Cards - Soft Pastel Accents */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white rounded-xl p-5 border border-[#E5EAF3] shadow-xs hover:border-blue-200 transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-[#64748B]">System Workload</span>
-            <div className="w-10 h-10 rounded-xl gradient-icon-blue flex items-center justify-center shadow-xs">
-              <Activity className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-200/60 shadow-2xs">
+              <Activity className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
             <span className="text-2xl font-bold text-[#172033]">{applications.length}</span>
-            <span className="text-xs text-[#3867F5] ml-2 font-semibold">In Pipeline</span>
+            <span className="text-xs text-blue-600 ml-2 font-semibold">In Pipeline</span>
           </div>
-          <p className="mt-2 text-xs text-[#64748B]">Active state machine instances</p>
+          <p className="mt-2 text-xs text-[#64748B] font-medium">Active state machine instances</p>
         </div>
 
         <div className="bg-white rounded-xl p-5 border border-[#E5EAF3] shadow-xs hover:border-emerald-200 transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-[#64748B]">Security & RBAC</span>
-            <div className="w-10 h-10 rounded-xl gradient-icon-emerald flex items-center justify-center shadow-xs">
-              <ShieldCheck className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-200/60 shadow-2xs">
+              <ShieldCheck className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
             <span className="text-2xl font-bold text-emerald-600">Strict RBAC</span>
             <span className="text-xs text-emerald-700 ml-2 font-semibold">Enforced</span>
           </div>
-          <p className="mt-2 text-xs text-[#64748B]">Zero privilege escalation paths</p>
+          <p className="mt-2 text-xs text-[#64748B] font-medium">Zero privilege escalation paths</p>
         </div>
 
         <div className="bg-white rounded-xl p-5 border border-[#E5EAF3] shadow-xs hover:border-slate-300 transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-[#64748B]">Database Microservice</span>
-            <div className="w-10 h-10 rounded-xl gradient-icon-sky flex items-center justify-center shadow-xs">
-              <Database className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center border border-sky-200/60 shadow-2xs">
+              <Database className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
             <span className="text-2xl font-bold text-[#172033]">Online</span>
             <span className="text-xs text-emerald-600 ml-2 font-semibold">1.8ms latency</span>
           </div>
-          <p className="mt-2 text-xs text-[#64748B]">In-memory state synced to storage</p>
+          <p className="mt-2 text-xs text-[#64748B] font-medium">In-memory state synced to storage</p>
         </div>
 
         <div className="bg-white rounded-xl p-5 border border-[#E5EAF3] shadow-xs hover:border-violet-200 transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-[#64748B]">Statutory AI Services</span>
-            <div className="w-10 h-10 rounded-xl gradient-icon-violet flex items-center justify-center shadow-xs">
-              <Cpu className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center border border-violet-200/60 shadow-2xs">
+              <Cpu className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
-            <span className="text-2xl font-bold text-[#8B5CF6]">Gemini 2.5</span>
+            <span className="text-2xl font-bold text-violet-600">Gemini 2.5</span>
             <span className="text-xs text-violet-700 ml-2 font-semibold">Active</span>
           </div>
-          <p className="mt-2 text-xs text-[#64748B]">APH 2026-27 embeddings online</p>
+          <p className="mt-2 text-xs text-[#64748B] font-medium">APH 2026-27 embeddings online</p>
         </div>
       </div>
 
@@ -172,8 +172,8 @@ export const SuperAdminDashboard: React.FC = () => {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-base font-bold text-[#172033] flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg gradient-icon-blue flex items-center justify-center">
-                  <Sliders className="w-3.5 h-3.5 text-white" />
+                <div className="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-200/60">
+                  <Sliders className="w-3.5 h-3.5" />
                 </div>
                 Statutory SLA Threshold Engine
               </h2>
@@ -193,8 +193,8 @@ export const SuperAdminDashboard: React.FC = () => {
             <div className="p-4 bg-[#F8FAFF] rounded-xl border border-[#E5EAF3] space-y-3">
               <div className="flex items-center justify-between">
                 <span className="font-bold text-[#172033] flex items-center gap-2">
-                  <div className="w-5 h-5 rounded-md gradient-icon-blue flex items-center justify-center">
-                    <GitBranch className="w-3 h-3 text-white" />
+                  <div className="w-5 h-5 rounded-md bg-blue-100 text-blue-700 flex items-center justify-center">
+                    <GitBranch className="w-3 h-3" />
                   </div>
                   Complex Route (SCRUTINY_EVC_COMMITTEE)
                 </span>
@@ -243,8 +243,8 @@ export const SuperAdminDashboard: React.FC = () => {
             <div className="p-4 bg-[#F8FAFF] rounded-xl border border-[#E5EAF3] space-y-3">
               <div className="flex items-center justify-between">
                 <span className="font-bold text-[#172033] flex items-center gap-2">
-                  <div className="w-5 h-5 rounded-md gradient-icon-indigo flex items-center justify-center">
-                    <GitBranch className="w-3 h-3 text-white" />
+                  <div className="w-5 h-5 rounded-md bg-indigo-100 text-indigo-700 flex items-center justify-center">
+                    <GitBranch className="w-3 h-3" />
                   </div>
                   Standard Extension (SCRUTINY_EVC)
                 </span>
@@ -282,8 +282,8 @@ export const SuperAdminDashboard: React.FC = () => {
             <div className="p-4 bg-[#F8FAFF] rounded-xl border border-[#E5EAF3] space-y-3">
               <div className="flex items-center justify-between">
                 <span className="font-bold text-[#172033] flex items-center gap-2">
-                  <div className="w-5 h-5 rounded-md gradient-icon-emerald flex items-center justify-center">
-                    <GitBranch className="w-3 h-3 text-white" />
+                  <div className="w-5 h-5 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                    <GitBranch className="w-3 h-3" />
                   </div>
                   Fast-Track Route (SCRUTINY_ONLY)
                 </span>
@@ -306,7 +306,7 @@ export const SuperAdminDashboard: React.FC = () => {
 
             <button
               onClick={handleSaveSla}
-              className="w-full py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs rounded-xl shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-xl shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
             >
               <CheckCircle2 className="w-4 h-4" />
               <span>Save & Publish SLA Policy Rules</span>
@@ -318,8 +318,8 @@ export const SuperAdminDashboard: React.FC = () => {
         <div className="bg-white rounded-xl border border-[#E5EAF3] shadow-xs p-6 space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-base font-bold text-[#172033] flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg gradient-icon-violet flex items-center justify-center">
-                <Users className="w-3.5 h-3.5 text-white" />
+              <div className="w-7 h-7 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center border border-violet-200/60">
+                <Users className="w-3.5 h-3.5" />
               </div>
               8-Tier Role Permissions Matrix
             </h2>
@@ -345,13 +345,13 @@ export const SuperAdminDashboard: React.FC = () => {
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-[#172033] truncate">{u.name}</span>
                       {isActive && (
-                        <span className="text-[10px] bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold px-1.5 py-0.5 rounded shadow-xs">
+                        <span className="text-[10px] bg-blue-600 text-white font-semibold px-2 py-0.5 rounded shadow-2xs">
                           Current
                         </span>
                       )}
                     </div>
                     <p className="text-[11px] text-[#64748B] truncate">{u.designation} • {u.department}</p>
-                    <span className="text-[10px] font-mono text-[#3867F5] bg-white px-1.5 py-0.5 rounded border border-[#E5EAF3] mt-1 inline-block">
+                    <span className="text-[10px] font-mono text-blue-700 bg-white px-1.5 py-0.5 rounded border border-[#E5EAF3] mt-1 inline-block font-semibold">
                       Role: {u.role}
                     </span>
                   </div>

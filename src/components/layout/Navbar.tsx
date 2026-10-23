@@ -14,6 +14,7 @@ import {
   Globe,
   LogOut,
   KeyRound,
+  Menu,
 } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
@@ -34,6 +35,8 @@ export const Navbar: React.FC = () => {
     setCurrentView,
     setIsSignInModalOpen,
     logout,
+    isSidebarOpen,
+    toggleSidebar,
   } = useApp();
 
   const [showNotifications, setShowNotifications] = useState(false);
@@ -111,14 +114,29 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <header className="h-16 bg-white border-b border-[#E5EAF3] px-6 flex items-center justify-between sticky top-0 z-40 select-none shadow-2xs">
-      {/* Zone 1: Breadcrumb and title */}
-      <div className="flex items-center gap-3">
-        <div className="text-xs text-blue-600 font-bold tracking-wide uppercase">
+    <header className="h-16 bg-white/95 backdrop-blur-xs border-b border-[#E5EAF3] px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40 select-none shadow-2xs">
+      {/* Zone 1: Hamburger Menu, Breadcrumb and title */}
+      <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+        <button
+          type="button"
+          onClick={toggleSidebar}
+          className={`p-2 rounded-xl border transition-all cursor-pointer flex items-center justify-center shrink-0 ${
+            isSidebarOpen
+              ? 'bg-blue-50 text-blue-700 border-blue-200 shadow-2xs'
+              : 'bg-white hover:bg-slate-50 text-slate-700 hover:text-blue-700 border-[#E5EAF3] shadow-2xs hover:border-blue-200'
+          }`}
+          aria-label={isSidebarOpen ? 'Close navigation sidebar' : 'Open navigation sidebar'}
+          title={isSidebarOpen ? 'Close navigation sidebar' : 'Open navigation sidebar'}
+        >
+          <Menu className="w-4 h-4" />
+        </button>
+
+        <div className="hidden sm:flex items-center gap-1.5 text-xs text-blue-700 font-bold tracking-wide uppercase shrink-0">
+          <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
           AICTE SAMPARK
         </div>
-        <span className="text-slate-300">/</span>
-        <h1 className="text-sm font-bold text-[#172033] tracking-tight truncate max-w-md">
+        <span className="hidden sm:inline text-slate-300">/</span>
+        <h1 className="text-xs sm:text-sm font-bold text-slate-800 tracking-tight truncate max-w-[200px] sm:max-w-xs md:max-w-md">
           {getBreadcrumbTitle()}
         </h1>
       </div>

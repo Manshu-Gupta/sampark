@@ -123,10 +123,104 @@ export interface WorkflowTimelineEvent {
   relevantDocumentRefs?: string[];
 }
 
+export interface CollegeApprovalCourse {
+  id: string;
+  program: string;
+  courseName: string;
+  level: 'UG' | 'PG' | 'DIPLOMA';
+  currentIntake: number;
+  proposedIntake: number;
+  accreditationStatus: 'NBA_ACCREDITED' | 'APPLIED' | 'NOT_ACCREDITED';
+  affiliatingUniversity: string;
+}
+
+export interface CollegeApprovalFeeBreakdown {
+  applicationCategory: string;
+  baseRegulatoryFee: number;
+  inspectionFee: number;
+  gstAmount: number;
+  totalPayable: number;
+}
+
+export interface CollegeApprovalPayment {
+  paymentMode: 'NET_BANKING' | 'NEFT_RTGS' | 'UPI' | 'TREASURY_CHALLAN';
+  transactionId: string;
+  paymentDate: string;
+  amountPaid: number;
+  paymentStatus: 'PENDING' | 'PAID' | 'FAILED';
+  bankReference: string;
+  receiptNumber: string;
+}
+
+export interface CollegeApprovalFormData {
+  // Institutional Registration
+  permanentId?: string;
+  institutionName: string;
+  institutionType: InstitutionType;
+  establishmentYear: number;
+  societyTrustName: string;
+  societyRegNo: string;
+  headOfInstitutionName: string;
+  headDesignation: string;
+  headEmail: string;
+  headPhone: string;
+
+  // Location & Address
+  addressLine1: string;
+  addressLine2?: string;
+  city: string;
+  district: string;
+  state: string;
+  pincode: string;
+  landCategory: 'RURAL' | 'URBAN' | 'MEGA_CITY';
+  landAreaAcres: number;
+  builtUpAreaSqM: number;
+
+  // Course & Intake Details
+  courses: CollegeApprovalCourse[];
+
+  // Faculty & Academic Infrastructure
+  facultyCount: number;
+  cadreRatioCompliant: boolean;
+  studentFacultyRatio: string;
+  principalQualified: boolean;
+  classroomsCount: number;
+  tutorialRoomsCount: number;
+  laboratoriesCount: number;
+  seminarHallsCount: number;
+  libraryBooksCount: number;
+  libraryJournalSubscriptions: number;
+  computersCount: number;
+  bandwidthMbps: number;
+
+  // Facilities & Compliance
+  barrierFreeCampus: boolean;
+  fireSafetyNOCValid: boolean;
+  antiRaggingCommitteeConstituted: boolean;
+  internalComplaintsCommitteeConstituted: boolean;
+  grievanceRedressalEstablished: boolean;
+  scStCommitteeEstablished: boolean;
+
+  // Statutory Declarations
+  declarationAgreed: boolean;
+  signatoryName: string;
+  signatoryDesignation: string;
+  signatureDate: string;
+
+  // Fee & Payment
+  feeBreakdown: CollegeApprovalFeeBreakdown;
+  paymentDetails?: CollegeApprovalPayment;
+
+  // Status flags
+  isDraft: boolean;
+  lastSavedAt: string;
+}
+
 export interface Application {
   id: string;
   institutionId: string;
   institutionName: string;
+  permanentId?: string;
   type: ApplicationType;
   academicYear: string;
   route: ApplicationRoute;
@@ -146,6 +240,10 @@ export interface Application {
   scrutinyObservations: ScrutinyObservation[];
   clarificationHistory: ClarificationRecord[];
   timelineEvents: WorkflowTimelineEvent[];
+  paymentStatus?: 'PAID' | 'PENDING' | 'NOT_APPLICABLE';
+  paymentReference?: string;
+  feeAmount?: number;
+  formData?: CollegeApprovalFormData;
   finalDecision?: {
     outcome: 'APPROVED' | 'REJECTED';
     date: string;

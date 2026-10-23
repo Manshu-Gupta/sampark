@@ -57,14 +57,14 @@ export const BureauAuthorityDashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header Banner - White & Blue/Violet/Gold Gradient Identity */}
+      {/* Header Banner - White & Soft Navy/Amber Accent */}
       <div className="relative overflow-hidden rounded-2xl bg-white border border-[#E5EAF3] text-[#172033] p-6 md:p-8 shadow-xs">
-        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-600 via-violet-600 to-amber-500" />
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500/80 via-indigo-500/70 to-amber-500/80" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200/80 text-amber-900 text-xs font-bold mb-3 shadow-2xs">
-              <div className="w-5 h-5 rounded-md bg-gradient-to-r from-amber-500 to-orange-500 flex items-center justify-center text-white">
-                <Crown className="w-3 h-3 text-white" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200/80 text-amber-900 text-xs font-semibold mb-3">
+              <div className="w-5 h-5 rounded-md bg-amber-100 text-amber-800 flex items-center justify-center">
+                <Crown className="w-3.5 h-3.5" />
               </div>
               <span>Competent Authority Directorate</span>
               <span className="text-amber-800 font-mono font-bold">• Central Executive</span>
@@ -80,16 +80,16 @@ export const BureauAuthorityDashboard: React.FC = () => {
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={() => setActiveTab('reports')}
-              className="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 border border-[#E5EAF3] text-slate-700 font-bold text-xs transition-all flex items-center gap-2 shadow-2xs"
+              className="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-50 border border-[#E5EAF3] text-slate-700 font-bold text-xs transition-all flex items-center gap-2 shadow-2xs cursor-pointer"
             >
-              <div className="w-5 h-5 rounded bg-gradient-to-br from-blue-500 to-indigo-500 text-white flex items-center justify-center">
-                <BarChart3 className="w-3 h-3 text-white" />
+              <div className="w-5 h-5 rounded bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-200/60">
+                <BarChart3 className="w-3 h-3" />
               </div>
               <span>Macro Analytics</span>
             </button>
             <button
               onClick={() => setActiveTab('audit')}
-              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white font-bold text-xs transition-all flex items-center gap-2 shadow-sm shadow-blue-500/20"
+              className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition-all flex items-center gap-2 shadow-xs cursor-pointer"
             >
               <Stamp className="w-4 h-4" />
               <span>Statutory Audit Logs</span>
@@ -118,13 +118,13 @@ export const BureauAuthorityDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* KPI Cards - White with Vibrant Gradient Icons */}
+      {/* KPI Cards - Soft Pastel Icons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white rounded-2xl p-5 border border-[#E5EAF3] shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Awaiting Decision</span>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white flex items-center justify-center shadow-xs">
-              <Stamp className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center border border-amber-200/60 shadow-2xs">
+              <Stamp className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
@@ -137,8 +137,8 @@ export const BureauAuthorityDashboard: React.FC = () => {
         <div className="bg-white rounded-2xl p-5 border border-[#E5EAF3] shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Approved This Cycle</span>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white flex items-center justify-center shadow-xs">
-              <Award className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-200/60 shadow-2xs">
+              <Award className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
@@ -151,22 +151,22 @@ export const BureauAuthorityDashboard: React.FC = () => {
         <div className="bg-white rounded-2xl p-5 border border-[#E5EAF3] shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Level 3 Escalations</span>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500 to-pink-500 text-white flex items-center justify-center shadow-xs">
-              <ShieldAlert className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center border border-rose-200/60 shadow-2xs">
+              <ShieldAlert className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
             <span className="text-2xl font-extrabold text-rose-600">{criticalLevel3Escalations.length}</span>
             <span className="text-xs text-rose-600 ml-2 font-bold">Council Attention</span>
-          </div>
+            </div>
           <p className="mt-2 text-xs text-slate-500 font-medium">Critical SLA breaches</p>
         </div>
 
         <div className="bg-white rounded-2xl p-5 border border-[#E5EAF3] shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">SLA Adherence</span>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-violet-500 text-white flex items-center justify-center shadow-xs">
-              <Clock className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-200/60 shadow-2xs">
+              <Clock className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
@@ -245,7 +245,7 @@ export const BureauAuthorityDashboard: React.FC = () => {
                           setDecisionModalApp(app);
                           setDecisionType('APPROVED');
                         }}
-                        className="px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-xs rounded-xl transition-all flex items-center gap-1.5 shadow-sm shadow-emerald-500/20"
+                        className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl transition-all flex items-center gap-1.5 shadow-xs cursor-pointer"
                       >
                         <Check className="w-3.5 h-3.5" />
                         <span>Sign Approval (LoA)</span>
@@ -256,7 +256,7 @@ export const BureauAuthorityDashboard: React.FC = () => {
                           setDecisionModalApp(app);
                           setDecisionType('REJECTED');
                         }}
-                        className="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-bold text-xs rounded-xl transition-colors flex items-center gap-1"
+                        className="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-bold text-xs rounded-xl transition-colors flex items-center gap-1 cursor-pointer"
                       >
                         <X className="w-3.5 h-3.5" />
                         <span>Reject</span>
@@ -273,8 +273,8 @@ export const BureauAuthorityDashboard: React.FC = () => {
         <div className="space-y-6">
           <div className="bg-white rounded-2xl border border-[#E5EAF3] shadow-xs p-5">
             <h2 className="text-sm font-extrabold text-[#172033] flex items-center gap-2 mb-3">
-              <div className="w-6 h-6 rounded-md bg-gradient-to-br from-blue-600 to-violet-600 flex items-center justify-center text-white">
-                <Layers className="w-3.5 h-3.5 text-white" />
+              <div className="w-6 h-6 rounded-md bg-blue-100 text-blue-700 flex items-center justify-center">
+                <Layers className="w-3.5 h-3.5" />
               </div>
               Route-Level Velocity & Bottlenecks
             </h2>
@@ -290,7 +290,7 @@ export const BureauAuthorityDashboard: React.FC = () => {
                 </div>
                 <p className="text-[11px] text-slate-500 mb-2">Mandatory physical EVC + Committee scrutiny</p>
                 <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-gradient-to-r from-amber-500 to-orange-500 h-full rounded-full" style={{ width: '65%' }} />
+                  <div className="bg-amber-500 h-full rounded-full" style={{ width: '65%' }} />
                 </div>
                 <span className="text-[10px] text-slate-400 mt-1 block">Avg cycle: 28 days (SLA: 45)</span>
               </div>
@@ -302,7 +302,7 @@ export const BureauAuthorityDashboard: React.FC = () => {
                 </div>
                 <p className="text-[11px] text-slate-500 mb-2">Desk Scrutiny + Standard EVC inspection</p>
                 <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-gradient-to-r from-blue-500 to-cyan-500 h-full rounded-full" style={{ width: '82%' }} />
+                  <div className="bg-blue-600 h-full rounded-full" style={{ width: '82%' }} />
                 </div>
                 <span className="text-[10px] text-slate-400 mt-1 block">Avg cycle: 14 days (SLA: 25)</span>
               </div>
@@ -314,7 +314,7 @@ export const BureauAuthorityDashboard: React.FC = () => {
                 </div>
                 <p className="text-[11px] text-slate-500 mb-2">Zero EVC requirement. Direct validation.</p>
                 <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-gradient-to-r from-emerald-500 to-teal-500 h-full rounded-full" style={{ width: '95%' }} />
+                  <div className="bg-emerald-600 h-full rounded-full" style={{ width: '95%' }} />
                 </div>
                 <span className="text-[10px] text-slate-400 mt-1 block">Avg cycle: 4 days (SLA: 7)</span>
               </div>
@@ -325,15 +325,15 @@ export const BureauAuthorityDashboard: React.FC = () => {
 
       {/* Decision Modal */}
       {decisionModalApp && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-in fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/30 backdrop-blur-xs animate-in fade-in">
           <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-[#E5EAF3] space-y-4">
             <div className="flex items-center gap-3">
               <div
-                className={`w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-xs ${
-                  decisionType === 'APPROVED' ? 'bg-gradient-to-br from-emerald-500 to-teal-500' : 'bg-gradient-to-br from-rose-500 to-pink-500'
+                className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-xs ${
+                  decisionType === 'APPROVED' ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'
                 }`}
               >
-                <Stamp className="w-5 h-5 text-white" />
+                <Stamp className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="text-base font-extrabold text-[#172033]">
@@ -376,10 +376,10 @@ export const BureauAuthorityDashboard: React.FC = () => {
               </button>
               <button
                 onClick={handleExecuteDecision}
-                className={`px-4 py-2 rounded-xl text-white font-bold text-xs flex items-center gap-1.5 shadow-sm ${
+                className={`px-4 py-2 rounded-xl text-white font-semibold text-xs flex items-center gap-1.5 shadow-xs cursor-pointer ${
                   decisionType === 'APPROVED'
-                    ? 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700'
-                    : 'bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700'
+                    ? 'bg-emerald-600 hover:bg-emerald-700'
+                    : 'bg-rose-600 hover:bg-rose-700'
                 }`}
               >
                 <Stamp className="w-3.5 h-3.5" />

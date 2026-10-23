@@ -49,14 +49,14 @@ export const AuditorDashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header Banner - White & Sky Blue/Indigo Gradient Identity */}
+      {/* Header Banner - White & Soft Slate/Sky Accent */}
       <div className="relative overflow-hidden rounded-2xl bg-white border border-[#E5EAF3] text-[#172033] p-6 md:p-8 shadow-xs">
-        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600" />
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sky-500/80 via-blue-500/70 to-indigo-500/80" />
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 border border-sky-200/80 text-sky-800 text-xs font-bold mb-3 shadow-2xs">
-              <div className="w-5 h-5 rounded-md bg-gradient-to-r from-sky-500 to-indigo-600 flex items-center justify-center text-white">
-                <Lock className="w-3 h-3 text-white" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 border border-sky-200/80 text-sky-800 text-xs font-semibold mb-3">
+              <div className="w-5 h-5 rounded-md bg-sky-100 text-sky-800 flex items-center justify-center">
+                <Lock className="w-3.5 h-3.5" />
               </div>
               <span>Independent Statutory Audit Directorate</span>
               <span className="text-indigo-700 font-mono font-bold">• READ-ONLY ACCESS</span>
@@ -72,7 +72,7 @@ export const AuditorDashboard: React.FC = () => {
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={handleExportAuditDossier}
-              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-700 hover:to-indigo-700 text-white font-bold text-xs transition-all flex items-center gap-2 shadow-sm shadow-indigo-500/20"
+              className="px-4 py-2.5 rounded-xl bg-slate-700 hover:bg-slate-800 text-white font-semibold text-xs transition-all flex items-center gap-2 shadow-xs cursor-pointer"
             >
               <Download className="w-4 h-4" />
               <span>Export Audit Ledger (JSON)</span>
@@ -89,13 +89,13 @@ export const AuditorDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* KPI Cards - White with Sky Blue/Indigo Gradient Icons */}
+      {/* KPI Cards - Soft Pastel Icons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white rounded-2xl p-5 border border-[#E5EAF3] shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Immutable Logs</span>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-slate-600 to-slate-800 text-white flex items-center justify-center shadow-xs">
-              <History className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center border border-slate-200/80 shadow-2xs">
+              <History className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
@@ -108,8 +108,8 @@ export const AuditorDashboard: React.FC = () => {
         <div className="bg-white rounded-2xl p-5 border border-[#E5EAF3] shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">SLA Adherence</span>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white flex items-center justify-center shadow-xs">
-              <CheckCircle2 className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-200/60 shadow-2xs">
+              <CheckCircle2 className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
@@ -122,13 +122,13 @@ export const AuditorDashboard: React.FC = () => {
         <div className="bg-white rounded-2xl p-5 border border-[#E5EAF3] shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Files Monitored</span>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 text-white flex items-center justify-center shadow-xs">
-              <FileCheck2 className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center border border-sky-200/60 shadow-2xs">
+              <FileCheck2 className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
             <span className="text-2xl font-extrabold text-[#172033]">{applications.length}</span>
-            <span className="text-xs text-indigo-600 ml-2 font-bold">Under Surveillance</span>
+            <span className="text-xs text-sky-700 ml-2 font-bold">Under Surveillance</span>
           </div>
           <p className="mt-2 text-xs text-slate-500 font-medium">All 7 administrative zones</p>
         </div>
@@ -136,13 +136,13 @@ export const AuditorDashboard: React.FC = () => {
         <div className="bg-white rounded-2xl p-5 border border-[#E5EAF3] shadow-xs hover:shadow-md transition-all">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Hash Integrity</span>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-xs">
-              <Key className="w-5 h-5 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center border border-indigo-200/60 shadow-2xs">
+              <Key className="w-5 h-5" />
             </div>
           </div>
           <div className="mt-3">
-            <span className="text-2xl font-extrabold text-blue-600">SHA-256</span>
-            <span className="text-xs text-blue-700 ml-2 font-bold">Verified</span>
+            <span className="text-2xl font-extrabold text-indigo-600">SHA-256</span>
+            <span className="text-xs text-indigo-700 ml-2 font-bold">Verified</span>
           </div>
           <p className="mt-2 text-xs text-slate-500 font-medium">Zero hash collisions</p>
         </div>

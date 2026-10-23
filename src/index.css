@@ -9,41 +9,49 @@
 }
 
 .gradient-icon-blue {
-  background: linear-gradient(135deg, #3867F5, #06B6D4);
-  color: #FFFFFF;
+  background-color: #EFF6FF;
+  color: #2563EB;
+  border: 1px solid rgba(191, 219, 254, 0.7);
 }
 
 .gradient-icon-violet {
-  background: linear-gradient(135deg, #8B5CF6, #EC4899);
-  color: #FFFFFF;
+  background-color: #F5F3FF;
+  color: #7C3AED;
+  border: 1px solid rgba(221, 214, 254, 0.7);
 }
 
 .gradient-icon-emerald {
-  background: linear-gradient(135deg, #10B981, #06B6D4);
-  color: #FFFFFF;
+  background-color: #ECFDF5;
+  color: #059669;
+  border: 1px solid rgba(167, 243, 208, 0.7);
 }
 
 .gradient-icon-orange {
-  background: linear-gradient(135deg, #F59E0B, #F97316);
-  color: #FFFFFF;
+  background-color: #FFFBEB;
+  color: #D97706;
+  border: 1px solid rgba(253, 230, 138, 0.7);
 }
 
 .gradient-icon-indigo {
-  background: linear-gradient(135deg, #4F46E5, #8B5CF6);
-  color: #FFFFFF;
+  background-color: #EEF2FF;
+  color: #4F46E5;
+  border: 1px solid rgba(199, 210, 254, 0.7);
 }
 
 .gradient-icon-rose {
-  background: linear-gradient(135deg, #EF4444, #F43F5E);
-  color: #FFFFFF;
+  background-color: #FFF1F2;
+  color: #E11D48;
+  border: 1px solid rgba(254, 205, 211, 0.7);
 }
 
 .gradient-icon-teal {
-  background: linear-gradient(135deg, #0D9488, #10B981);
-  color: #FFFFFF;
+  background-color: #F0FDFA;
+  color: #0D9488;
+  border: 1px solid rgba(153, 246, 228, 0.7);
 }
 
 .gradient-icon-sky {
-  background: linear-gradient(135deg, #0284C7, #3867F5);
-  color: #FFFFFF;
+  background-color: #F0F9FF;
+  color: #0284C7;
+  border: 1px solid rgba(186, 230, 253, 0.7);
 }
